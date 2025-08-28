@@ -36,34 +36,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Configurar página 
-st.set_page_config(page_title="Malla Curricular LIFI", page_icon="🎓", layout="wide")
-
-tab1, tab2, tab3, tab4 = st.tabs([" Normal", " Real", " Recomendado", " Personalizado"])
-altura = 1250
-
-with tab1:
-    # Embeber HTML
-    components.html(HTML_LIFI_N, height=altura, scrolling=True)
-with tab2:
-    # Embeber HTML
-    components.html(HTML_LIFI_R, height=altura, scrolling=True)  
-with tab3:
-    # Embeber HTML
-    components.html(HTML_LIFI_M, height=altura, scrolling=True)
-with tab4:
-    # Embeber HTML
-    components.html(HTML_LIFI_P, height=altura, scrolling=True)
-
-# PArte para calcular estadisticas
-st.markdown("### ¡Revisa tu progreso! (Estadísticas)")
-
-progreso_text = st.text_area(
-    "Pega aquí la información copiada arriba y haz 'Ctrl+Enter':",
-    height=100,
-    placeholder='{"approved":["ICS181","EFI100"]}'
-)
-
 # ---- Helpers ----
 def is_real_course(c: dict) -> bool:
     """True si cuenta para métricas (descarta spacers u otros 'kind')."""
@@ -96,19 +68,51 @@ def calc_stats(approved_ids: set[str]):
 
     return approved_courses, total_courses, pct_courses, approved_credits, total_credits, pct_credits
 
-# ---- UI ----
-if progreso_text.strip():
-    try:
-        data = json.loads(progreso_text)
-        approved = set(data.get("approved", []))
-        ac, tc, pc, acred, tcred, pcred = calc_stats(approved)
+# Configurar página 
+st.set_page_config(page_title="Malla Curricular LIFI", page_icon="🎓", layout="wide")
 
-        m1, m2, m3 = st.columns(3)
-        m1.metric("Créditos aprobados", f"{int(acred)} / {int(tcred)}")
-        m2.metric("Porcentaje de creditos", f"{pcred:.0f}%")
-        m3.metric("Materias aprobadas", f"{ac} / {tc}")
-    except Exception as e:
-        st.error(
-            "JSON inválido. Ejemplo válido: {\"approved\":[\"ICS181\",\"EFI100\"]}\n\n"
-            f"Error: {e}"
-        )
+tab1, tab2, tab3, tab4 = st.tabs([" Normal", " Real", " Recomendado", " Personalizado"])
+altura = 1250
+
+with tab1:
+    # Embeber HTML
+    components.html(HTML_LIFI_N, height=altura, scrolling=True)
+with tab2:
+    # Embeber HTML
+    components.html(HTML_LIFI_R, height=altura, scrolling=True)  
+with tab3:
+    # Embeber HTML
+    components.html(HTML_LIFI_M, height=altura, scrolling=True)
+with tab4:
+    # Embeber HTML
+    components.html(HTML_LIFI_P, height=altura, scrolling=True)
+
+# PArte para calcular estadisticas
+st.markdown("### ¡Revisa tu progreso! (Estadísticas)")
+
+col1, col2 = st.columns([2,1])
+
+with col1:
+  progreso_text = st.text_area(
+      "Pega aquí la información copiada arriba y haz 'Ctrl+Enter':",
+      height=100,
+      placeholder='{"approved":["ICS181","EFI100"]}'
+  )
+
+with col2:
+  # ---- UI ----
+  if progreso_text.strip():
+      try:
+          data = json.loads(progreso_text)
+          approved = set(data.get("approved", []))
+          ac, tc, pc, acred, tcred, pcred = calc_stats(approved)
+  
+          m1, m2, m3 = st.columns(3)
+          m1.metric("Créditos aprobados", f"{int(acred)} / {int(tcred)}")
+          m2.metric("Porcentaje de creditos", f"{pcred:.0f}%")
+          m3.metric("Materias aprobadas", f"{ac} / {tc}")
+      except Exception as e:
+          st.error(
+              "JSON inválido. Ejemplo válido: {\"approved\":[\"ICS181\",\"EFI100\"]}\n\n"
+              f"Error: {e}"
+          )

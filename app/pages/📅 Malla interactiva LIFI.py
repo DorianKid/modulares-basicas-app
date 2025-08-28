@@ -1,6 +1,7 @@
 import json
 import streamlit as st
 import streamlit.components.v1 as components
+import importlib, files.html_grid as html_grid
 from files.html_grid import (HTML_LIFI_N, HTML_LIFI_M, HTML_LIFI_R, HTML_LIFI_P)
 from LIFI.courses_data_lifi import mod_lifi_courses
 
@@ -73,19 +74,20 @@ st.set_page_config(page_title="Malla Curricular LIFI", page_icon="🎓", layout=
 
 tab1, tab2, tab3, tab4 = st.tabs([" Normal", " Real", " Recomendado", " Personalizado"])
 altura = 1250
+html_grid = importlib.reload(html_grid)
 
 with tab1:
     # Embeber HTML
-    components.html(HTML_LIFI_N, height=altura, scrolling=True)
+    components.html(html_grid.HTML_LIFI_N, height=altura, scrolling=True)
 with tab2:
     # Embeber HTML
-    components.html(HTML_LIFI_R, height=altura, scrolling=True)  
+    components.html(html_grid.HTML_LIFI_R, height=altura, scrolling=True)  
 with tab3:
     # Embeber HTML
-    components.html(HTML_LIFI_M, height=altura, scrolling=True)
+    components.html(html_grid.HTML_LIFI_M, height=altura, scrolling=True)
 with tab4:
     # Embeber HTML
-    components.html(HTML_LIFI_P, height=altura, scrolling=True)
+    components.html(html_grid.HTML_LIFI_P, height=altura, scrolling=True)
 
 # PArte para calcular estadisticas
 st.markdown("### ¡Revisa tu progreso! (Estadísticas)")

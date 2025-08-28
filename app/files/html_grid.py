@@ -186,30 +186,25 @@ def legend_html(area_class: Dict[str, str], area_labels: Dict[str, str] | None =
         "</div>"
     )
 
-def render_html(
-    courses: List[Dict[str, Any]],
-    area_class: Dict[str, str],
-    area_labels: Dict[str, str],
-    *,
-    editable: bool = False,        # 👈 bandera para activar edición
-    zoom: float = 0.7
-) -> str:
-    # ... agrupar por semestre como ya lo tienes ...
+def render_html(courses, area_class, area_labels, *, editable=False,
+                zoom=0.7, h1_fs="1.8rem", p_fs="1.05rem", legend_fs="1rem") -> str:
+    css = load_css()
+    JS_EXPORT = load_js("app/files/grid_functions.js")
+    JS_DND    = load_js("app/files/drag_and_drop.js") if editable else ""
 
-    css = load_css()               # 👈 lee CSS con hot-reload
-    js_export = load_js_export()   # 👈 JS de utilidades (copiar progreso)
-    js_dnd = load_js_dnd() if editable else ""   # 👈 solo si editable
+    # ... (agrupas y construyes headers/columns como ya tienes)
 
     data_json = json.dumps(data, ensure_ascii=False)
-    slots_per_semester = 9
-    max_semesters = 12
+
+    # wrapper con zoom y tamaños; PONEMOS LAS VARS EN .plan TAMBIÉN
+    plan_style = f"--h1-fs:{h1_fs}; --p-fs:{p_fs}; --legend-fs:{legend_fs};"
+    zoom_wrap_style = f"--plan-zoom:{zoom};"
 
     html = f"""
-<style>{css}
-{unlock_css}</style>
+<style>{css}</style>
 
-<div class="plan-zoom-wrap" style="--plan-zoom:{zoom};">
-  <div class="plan plan-zoom">
+<div class="plan-zoom-wrap" style="{zoom_wrap_style}">
+  <div class="plan plan-zoom{' is-editable' if editable else ''}" style="{plan_style}">
     <h1 style="margin:0 0 8px 4px;">Malla Curricular Interactiva</h1>
 
     <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 4px 14px 4px;">
@@ -224,18 +219,22 @@ def render_html(
       </label>
     </div>
 
-    {"".join([
-      '<div class="edit-toolbar" style="margin:8px 4px;">',
-      '<label style="display:inline-flex;align-items:center;gap:8px;font-weight:600;">',
-      '<input id="edit-toggle" type="checkbox"> Editar (drag & drop)</label>',
-      '<button id="btn-add-sem">➕ Agregar semestre</button>',
-      '<button id="btn-rem-sem">➖ Quitar último</button>',
-      '<button id="btn-download">🖨️ Descargar malla</button>',
-      '</div>'
-    ]) if editable else ""}
+    {""
+      if not editable else
+      '''
+      <div class="edit-toolbar" style="margin:8px 4px;">
+        <label style="display:inline-flex;align-items:center;gap:8px;font-weight:600;">
+          <input id="edit-toggle" type="checkbox"> Editar (drag & drop)
+        </label>
+        <button id="btn-add-sem">➕ Agregar semestre</button>
+        <button id="btn-rem-sem">➖ Quitar último</button>
+        <button id="btn-download">🖨️ Descargar malla</button>
+      </div>
+      '''
+    }
 
-    <div class="table" data-slots="{slots_per_semester}" data-maxsem="{max_semesters}"
-         style="grid-template-columns: repeat({cols}, minmax(180px, 1.15fr));">
+    <div class="table" data-slots="9" data-maxsem="12"
+         style="grid-template-columns: repeat({len(semesters)}, minmax(180px, 1.15fr));">
       {headers_row}
       {columns}
     </div>
@@ -243,8 +242,9 @@ def render_html(
     {legend_html(area_class, area_labels)}
 
     <div style="display:flex;gap:8px;margin-top:10px;justify-content:center;">
-      <button id="btn-copy" 
-              style="padding:8px 10px;border-radius:8px;border:1px solid #cbd5e1;background:#f8fafc;cursor:pointer;">
+      <button id="btn-copy"
+              style="padding:8px 10px;border-radius:8px;
+                     border:1px solid #cbd5e1;background:#f8fafc;cursor:pointer;">
         📋 Copiar progreso
       </button>
     </div>
@@ -252,8 +252,15 @@ def render_html(
 </div>
 
 <script id="__courses" type="application/json">{data_json}</script>
-{js_dnd}
-{js_export}
+{JS_DND}
+{JS_EXPORT}
+
+<!-- Override final por si hay reglas viejas en cache -->
+<style id="font-override">
+  .legend{{ font-size: var(--legend-fs,1rem) !important; }}
+  .plan h1{{ font-size: var(--h1-fs,1.6rem) !important; line-height:1.2; }}
+  .plan p{{ font-size: var(--p-fs,1rem) !important; line-height:1.45; }}
+</style>
 """
     return html
 

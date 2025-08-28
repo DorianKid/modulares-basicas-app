@@ -1,0 +1,353 @@
+/* =====================================================
+   1) Variables globales (tema)
+   ===================================================== */
+:root{
+  --bg:#eef2f7; --header:#8f96a6; --header-text:#fff;
+  --border:#cfd6e3; --shadow:rgba(0,0,0,.06);
+  --title:#1f2937; --sub:#55627a;
+
+  --card-h:150px;         /* altura uniforme por fila */
+  --pad-card:5px;
+
+  --fs-code:.80rem;       /* clave/encabezado */
+  --fs-title:.85rem;      /* título */
+  --fs-cred:.70rem;       /* badges C/H */
+
+  /* Áreas (si quieres pintar la tarjeta usando .card.{area}) */
+  --c-metodo:#FA8014; --c-progra:#FFD200; --c-mate:#60a5fa;
+  --c-extra:#6B3205; --c-fis:#A52019; --c-lab:#a78bfa;
+  --c-quim:#FFC0CB; --c-educ:#CDCDCD;
+}
+
+/* =====================================================
+   2) Plan de estudios (layout general y tabla)
+   ===================================================== */
+html,body{
+  background:var(--bg);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif;
+  color:#111;
+}
+.plan{ width:min(1800px,98vw); margin:10px 10px 16px; }
+
+/* Contenedor que mantiene el scroll */
+.plan-zoom-wrap{
+  overflow: auto;   /* mantiene scroll si hace falta */
+  width: 100%;
+}
+
+/* Preferir zoom si el navegador lo soporta */
+@supports (zoom: 1) {
+  .plan-zoom {
+    zoom: var(--plan-zoom);
+    transform: none;           /* quita el transform */
+    width: auto;               /* quita el width calc */
+  }
+}
+
+/* Fallback para navegadores sin zoom (Firefox) */
+@supports not (zoom: 1) {
+  .plan-zoom {
+    transform: scale(var(--plan-zoom));
+    transform-origin: top left;
+  }
+}
+
+/* Opcional: al imprimir, vuelve a 1:1 para un PDF nítido */
+@media print{
+  .plan-zoom{
+    transform: none !important;
+    width: auto !important;
+  }
+}
+
+.table{ 
+   display:grid; 
+   grid-template-columns:repeat(10,minmax(180px,1.15fr)); 
+   gap:14px; 
+   align-items:start; 
+}
+
+/* Encabezado de semestre */
+.sem-head{
+  background:var(--header); color:var(--header-text);
+  border-radius:8px; text-align:center; padding:8px 0; margin-bottom:8px;
+  font-weight:800; letter-spacing:.04em;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
+}
+
+/* =====================================================
+   3) Columna y celda
+   ===================================================== */
+.sem-col{ display:grid; grid-auto-rows:var(--card-h); row-gap:12px; }
+
+.cell{ position:relative; overflow:hidden; border-radius:8px; }
+
+/* Overlay clicable (marca aprobado) */
+.cell .tick{ position:absolute; inset:0; z-index:5; margin:0; }
+.cell .tick input{ position:absolute; inset:0; opacity:0; cursor:pointer; margin:0; }
+.cell .tick span{ display:none; }
+
+/* ---- Modo “Solo ver”: sin clics, sin candados, sin resaltado ---- */
+body.view-only .tick,
+body.view-only .cell,
+body.view-only .cell *{ pointer-events:none !important; cursor:default !important; }
+body.view-only .locked .card::after{ display:none !important; }
+body.view-only .cell:has(.tick input:checked) .card::before{ display:none !important; }
+body.view-only .cell:has(.tick input:checked) .card{
+  outline:none !important; box-shadow:0 6px 12px var(--shadow) !important;
+}
+
+/* =====================================================
+   4) Tarjeta base
+   ===================================================== */
+.card{
+  position:relative; background:#fff; border:1px solid var(--border);
+  border-radius:8px; height:100%; box-sizing:border-box;
+  padding:var(--pad-card); box-shadow:0 6px 12px var(--shadow);
+  display:flex; flex-direction:column; gap:8px; overflow:hidden;
+}
+
+/* (Opcional) skins de área si usas .card.metodo, .card.fis, etc. */
+
+.dots { 
+   display: flex; 
+   gap: 6px; 
+} 
+.dot { 
+   width: 14px; 
+   height: 14px; 
+   border-radius: 50%; 
+   border: 2px solid #fff; 
+   box-shadow: 0 0 0 1px rgba(0,0,0,.08) inset; 
+}
+
+.mate{background:var(--c-mate);color:#fff}
+.fis{background:var(--c-fis);color:#fff}
+.progra{background:var(--c-progra);color:#111}
+.metodo{background:var(--c-metodo);color:#111}
+.lab{background:var(--c-lab);color:#fff}
+.extra{background:var(--c-extra);color:#fff}
+.quim{background:var(--c-quim);color:#111}
+.educ{background:var(--c-educ);color:#111}
+
+/* =====================================================
+   5) Barra superior (clave + orden)
+   ===================================================== */
+.card .code-row{
+  position:relative;
+  display:flex; align-items:center; justify-content:space-between;
+  background:#111; color:#fff;
+  border-radius:10px; padding:6px 8px;
+  margin:0 0 0px 0px;
+  font-weight:800; font-size:var(--fs-code);
+  z-index:1;  /* menor que el candado */
+}
+.card .code-row .num{
+  min-width:6px; padding:2px 7px; border-radius:999px;
+  background:#e5e7eb; color:#111; font-weight:900; font-size:.72rem;
+}
+
+.card.mate   { background: var(--c-mate); }
+.card.fis    { background: var(--c-fis); }
+.card.progra { background: var(--c-progra); }
+.card.metodo { background: var(--c-metodo); }
+.card.lab    { background: var(--c-lab); }
+.card.extra  { background: var(--c-extra); }
+.card.quim   { background: var(--c-quim); }
+.card.educ   { background: var(--c-educ); }
+
+/* =====================================================
+   6) Título (no se solapa con barras)
+   ===================================================== */
+.card .title{
+  font-size:var(--fs-title); line-height:1.15; font-weight:700;
+  display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:4; overflow:hidden;
+  flex:1 1 auto; min-height:0; padding: 0px 3px;     /* ocupa solo el espacio disponible */
+}
+
+/* =====================================================
+   7) Footer / barra inferior
+   (prerrequisitos a la izquierda; C/H a la derecha)
+   ===================================================== */
+/* ---- footer ---- */
+.card .footer{
+  display:flex; align-items:center; justify-content:space-between;
+  background:#111; color:#fff;
+  border-radius:10px; padding:6px 6px;
+  margin-top:auto;
+  z-index:1;  /* menor que el candado */
+}
+
+/* Créditos / Horas (derecha) */
+.footer-right{ margin-left:auto; display:flex; align-items:center; gap:8px; }
+.badge{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:3px 4px; border-radius:8px; background:#fff; color:#111;
+  border:1px solid rgba(255,255,255,.45); font-weight:900; line-height:1;
+  font-size:var(--fs-cred);
+}
+/* === Prerrequisitos en el footer (izquierda) === */
+.prereq-badges{
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+
+/* Oculta el contenedor si no hay prerrequisitos */
+.prereq-badges:empty{ display:none; }
+
+/* Bolita tipo “pill/círculo” con el número del order */
+/* Bolita pequeña y perfectamente redonda */
+.badge-pr{
+  width:18px;              /* diámetro fijo más pequeño */
+  height:18px;
+  border-radius:50%;       /* círculo perfecto */
+  display:grid;
+  place-items:center;
+  background:#fff;
+  color:#111;
+  font-weight:700;         /* un poco menos grueso que 900 si quieres */
+  font-size:.65rem;        /* texto más pequeño */
+  border:1px solid rgba(0,0,0,.25);
+  line-height:1;
+}
+
+/* Aplica el color de fondo según área del prerequisito */
+.badge-pr.mate   { background: var(--c-mate); }
+.badge-pr.fis    { background: var(--c-fis); }
+.badge-pr.progra { background: var(--c-progra); }
+.badge-pr.metodo { background: var(--c-metodo); }
+.badge-pr.lab    { background: var(--c-lab); }
+.badge-pr.extra  { background: var(--c-extra); }
+.badge-pr.quim   { background: var(--c-quim); }
+.badge-pr.educ   { background: var(--c-educ); }
+
+/* =====================================================
+   8) Estados: Bloqueada / Aprobada
+   ===================================================== */
+
+/* Bloqueada: overlay por debajo de barras para que se lean */
+.locked .card::after {
+  content:"🔒 Bloqueada";
+  position:absolute;
+  inset:0;
+  border-radius:8px;
+  background:rgba(255,255,255,.85); /* un poco más opaco */
+  color:#111;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10;   /* AHORA es el más alto */
+}
+
+/* Bloqueada: sin clics en la celda ni en el label */
+.locked, .locked .tick{ pointer-events:none; }
+
+/* Aprobada: aro + patrón */
+.cell:has(.tick input:checked) .card{
+  outline:2px solid rgba(34,197,94,.35);
+  box-shadow:0 0 0 4px rgba(34,197,94,.08);
+}
+
+/* Cuando la materia está marcada como aprobada */
+.cell:has(.tick input:checked) .card::before {
+  content: "✔";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 7rem;        /* tamaño grande */
+  font-weight: 900;
+  color: rgba(34,197,94,.9);  /* verde con transparencia */
+
+  z-index: 40;       /* sobre fondos y bordes */
+  pointer-events: none;
+}
+
+/* Altura base por fila (ya lo tienes) */
+.sem-col{ display:grid; grid-auto-rows: var(--card-h); row-gap:12px; }
+
+/* Celda fantasma (spacer): ocupa espacio pero no es interactiva */
+.cell.ghost{
+  pointer-events: none;
+  border-radius: 8px;
+}
+
+/* Opción A: totalmente invisible (solo reserva espacio) */
+.cell.ghost { background: transparent; }
+
+/* Opción B (útil para depurar): una guía tenue */
+body.debug .cell.ghost{
+  background: repeating-linear-gradient(
+    45deg, rgba(0,0,0,.03) 0 8px, rgba(0,0,0,.03) 8px 16px, transparent 16px 24px
+  );
+  border: 1px dashed rgba(0,0,0,.08);
+}
+
+# 9 Slot para arrastre
+/* toolbar + modo edición */
+.edit-toolbar{display:flex; gap:8px; align-items:center; flex-wrap:wrap;}
+body.edit-mode .cell{ cursor: move; }
+body.edit-mode .cell .tick{ display:none; }
+
+/* slots y límites */
+.table .sem-col{ min-height: 40px; }
+.table .sem-col.full{ outline: 2px dashed #ef4444; outline-offset: 4px; }
+
+.slot{
+  min-height: 150px;      /* igual a la altura de las cards */
+  border-radius: 12px;
+  margin: 0;
+  display:flex; align-items:center; justify-content:center;
+  border: 0; background: transparent;
+}
+.slot > .cell{ width: 100%; }  /* la card ocupa el slot */
+body.edit-mode .slot{
+  border: 1px dashed #94a3b8;
+  background: rgba(148,163,184,.16);
+}
+.slot.drop-ok{ outline: 2px dashed #22c55e; outline-offset: 3px; }
+
+body.edit-mode .slot{
+  border: 1px dashed #94a3b8;
+  background: rgba(148,163,184,.16);
+}
+
+/* impresión */
+@media print{
+  .edit-toolbar, .tick, #view-only{ display:none !important; }
+  .plan{ box-shadow:none; }
+}
+
+/* Misma altura exacta para cards y slots */
+.sem-col{ grid-auto-rows: var(--card-h); }
+
+.cell,
+.slot{
+  height: var(--card-h);     /* no min-height */
+  box-sizing: border-box;
+}
+
+/* El card ocupa todo el slot */
+.slot > .cell{
+  width: 100%;
+  height: 100%;
+}
+
+/* El slot no añade margen extra ni bordes fuera de edición */
+.slot{
+  border-radius: 12px;
+  margin: 0;
+  display:flex; align-items:center; justify-content:center;
+  border: 0; background: transparent;
+}
+
+/* En edición lo mostramos tenue (como ya tenías) */
+body.edit-mode .slot{
+  border: 1px dashed #94a3b8;
+  background: rgba(148,163,184,.16);
+}
+

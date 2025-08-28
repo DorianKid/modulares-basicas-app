@@ -182,14 +182,14 @@ else:
     """)
 
 # Ruta del archivo PDF
-pdf_path = "/mount/src/modularesbasicas/app/files/PDFs/Plantilla_Modulares.pdf"  # Reemplaza con la ruta a tu archivo PDF
+pdf_path = "app/files/PDFs/Plantilla_Modulares.pdf"  # Reemplaza con la ruta a tu archivo PDF
 
 # Contenedor expandible para el PDF
 with st.expander("Ver Plantilla", expanded=False):
 
     col1, col2 = st.columns(2)    
     with col1:
-        contenido_tex = read_tex_file("/mount/src/modularesbasicas/app/files/PDFs/Plantilla_Modulares.tex")
+        contenido_tex = read_tex_file("app/files/PDFs/Plantilla_Modulares.tex")
 
         # Mostrar el contenido con desplazamiento
         st.text_area("Código LaTeX", value=contenido_tex, height=1250, disabled=True)
@@ -252,27 +252,27 @@ with col2:
 # Diccionario de archivos PDF con sus descripciones y número de páginas
 pdf_files = {
     "📄 Trabajo de Investigación": {
-        "path": "/mount/src/modularesbasicas/app/files/PDFs/Lineamientos_Trabajo_Investigacion.pdf",
+        "path": "app/files/PDFs/Lineamientos_Trabajo_Investigacion.pdf",
         "pages": 11,  # Cambia esto al número real de páginas
         "description": "Desarrollo de proyectos con método científico, hipótesis y resultados analíticos."
     },
     "🖍️ Materiales Educativos": {
-        "path": "/mount/src/modularesbasicas/app/files/PDFs/Lineamientos_Materiales_Educativos.pdf",
+        "path": "app/files/PDFs/Lineamientos_Materiales_Educativos.pdf",
         "pages": 2,  # Cambia esto al número real de páginas
         "description": "Creación de recursos didácticos para el aprendizaje en ciencias farmacéuticas."
     },
     "🔧 Prototipo": {
-        "path": "/mount/src/modularesbasicas/app/files/PDFs/Lineamientos_Prototipo.pdf",
+        "path": "app/files/PDFs/Lineamientos_Prototipo.pdf",
         "pages": 4,  # Cambia esto al número real de páginas
         "description": "Desarrollo de modelos físicos o funcionales de productos farmacéuticos o biológicos."
     },
     "📋 Reporte": {
-        "path": "/mount/src/modularesbasicas/app/files/PDFs/Lineamientos_Reporte.pdf",
+        "path": "app/files/PDFs/Lineamientos_Reporte.pdf",
         "pages": 3,  # Cambia esto al número real de páginas
         "description": "Documentación técnica de procesos o investigaciones específicas."
     },
     "🫂 Vinculación Social": {
-        "path": "/mount/src/modularesbasicas/app/files/PDFs/Lineamientos_Vinculacion_Social.pdf",
+        "path": "app/files/PDFs/Lineamientos_Vinculacion_Social.pdf",
         "pages": 3,  # Cambia esto al número real de páginas
         "description": "Proyectos con impacto en comunidades o sectores específicos."
     }

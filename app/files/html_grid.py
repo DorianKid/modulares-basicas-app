@@ -232,7 +232,7 @@ def render_html(
       if not editable else
       f'''
       <div class="edit-toolbar" style="margin:8px 4px; align-itmes:center;">
-        <label style="display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:1.2rem;line-height:1.1;">
+        <label style="display:flex;flex-wrap:wrap;gap:8px;position:relative;justify-content:center; text-align:center;font-weight:600;font-size:1.2rem;line-height:1.1;">
           <input id="edit-toggle" type="checkbox"> Editar (drag & drop)
         </label>
         <button id="btn-add-sem"

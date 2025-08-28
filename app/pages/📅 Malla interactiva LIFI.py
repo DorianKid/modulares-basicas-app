@@ -90,7 +90,7 @@ with tab4:
 # PArte para calcular estadisticas
 st.markdown("### ¡Revisa tu progreso! (Estadísticas)")
 
-col1, col2 = st.columns([2,3])
+col1, col, col2 = st.columns([2,1,2])
 
 with col1:
   progreso_text = st.text_area(
@@ -108,6 +108,8 @@ with col2:
           ac, tc, pc, acred, tcred, pcred = calc_stats(approved)
   
           m1, m2, m3 = st.columns(3)
+          st.write("")
+          st.write("")
           m1.metric("Créditos aprobados", f"{int(acred)} / {int(tcred)}")
           m2.metric("Porcentaje de creditos", f"{pcred:.0f}%")
           m3.metric("Materias aprobadas", f"{ac} / {tc}")

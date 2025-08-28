@@ -17,6 +17,9 @@
   --c-metodo:#FA8014; --c-progra:#FFD200; --c-mate:#60a5fa;
   --c-extra:#6B3205; --c-fis:#A52019; --c-lab:#a78bfa;
   --c-quim:#FFC0CB; --c-educ:#CDCDCD;
+  --legend-fs: 1rem;
+  --h1-fs: 1.6rem;
+  --p-fs: 1rem;
 }
 
 /* =====================================================
@@ -351,3 +354,6 @@ body.edit-mode .slot{
   background: rgba(148,163,184,.16);
 }
 
+.legend{ font-size: var(--legend-fs); }
+.plan h1{ font-size: var(--h1-fs); }
+.plan p{ font-size: var(--p-fs); }

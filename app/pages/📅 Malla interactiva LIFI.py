@@ -9,6 +9,64 @@ from LIFI.courses_data_lifi import mod_lifi_courses
 # 👇 Inyecta estilos ANTES de crear los tabs
 st.markdown("""
 <style>
+/* --------- paleta --------- */
+:root{
+  --app-bg: #0f4c3a;        /* Fondo único para toda la app */
+  --text:   #e7f0ea;
+  --accent: #ff5757;
+}
+
+/* Página completa */
+html, body { background: var(--app-bg) !important; color: var(--text); }
+
+/* Contenedor raíz de Streamlit */
+.stApp,
+[data-testid="stAppViewContainer"]{
+  background: var(--app-bg) !important;
+}
+
+/* Cabecera superior */
+header[data-testid="stHeader"]{
+  background: var(--app-bg) !important;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+/* Contenedor principal (quita blancos) */
+section.main, .block-container{
+  background: transparent !important;
+}
+
+/* Tabs de Streamlit */
+.stTabs [data-baseweb="tab-list"]{
+  background: var(--app-bg) !important;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+}
+.stTabs [data-baseweb="tab"]{ color: var(--text) !important; }
+.stTabs [data-baseweb="tab"][aria-selected="true"]{
+  color:#fff !important;
+  border-bottom: 3px solid var(--accent) !important;
+}
+
+/* Barra lateral */
+[data-testid="stSidebar"], .stSidebar{
+  background: var(--app-bg) !important;
+  color: var(--text) !important;
+}
+
+/* Inputs (tono acorde al fondo) */
+[data-baseweb="input"], [data-baseweb="textarea"], [data-baseweb="select"]{
+  background: rgba(255,255,255,.06) !important;
+  color: var(--text) !important;
+  border-color: rgba(255,255,255,.25) !important;
+}
+
+/* Botones base (opcional) */
+button[kind="primary"], .stButton > button{
+  background: rgba(255,255,255,.12) !important;
+  color: var(--text) !important;
+  border: 1px solid rgba(255,255,255,.25) !important;
+}
+
 /* Espaciado entre pestañas */
 .stTabs [role="tablist"] {
   gap: 20px !important;

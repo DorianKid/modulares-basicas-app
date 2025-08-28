@@ -107,9 +107,11 @@ with col2:
           approved = set(data.get("approved", []))
           ac, tc, pc, acred, tcred, pcred = calc_stats(approved)
   
+          st.write("")
+          st.write("")
+        
           m1, m2, m3 = st.columns(3)
-          st.write("")
-          st.write("")
+
           m1.metric("Créditos aprobados", f"{int(acred)} / {int(tcred)}")
           m2.metric("Porcentaje de creditos", f"{pcred:.0f}%")
           m3.metric("Materias aprobadas", f"{ac} / {tc}")

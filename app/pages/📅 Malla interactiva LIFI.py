@@ -94,7 +94,7 @@ col1, col, col2, cola = st.columns([2,1,2,1])
 
 with col1:
   progreso_text = st.text_area(
-      "Pega aquí la información copiada arriba y haz 'Ctrl+Enter':",
+      "Pega aquí la información copiada arriba de la malla y haz 'Ctrl+Enter':",
       height=100,
       placeholder='{"approved":["ICS181","EFI100"]}'
   )

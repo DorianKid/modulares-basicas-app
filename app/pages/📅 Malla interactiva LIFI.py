@@ -73,7 +73,7 @@ def calc_stats(approved_ids: set[str]):
 st.set_page_config(page_title="Malla Curricular LIFI", page_icon="🎓", layout="wide")
 
 tab1, tab2, tab3, tab4 = st.tabs([" Normal", " Real", " Recomendado", " Personalizado"])
-altura = 1250
+altura = 1280
 html_grid = importlib.reload(html_grid)
 
 with tab1:

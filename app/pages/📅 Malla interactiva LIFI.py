@@ -90,7 +90,7 @@ with tab4:
 # PArte para calcular estadisticas
 st.markdown("### ¡Revisa tu progreso! (Estadísticas)")
 
-col1, col2 = st.columns([2,1])
+col1, col2 = st.columns([2,3])
 
 with col1:
   progreso_text = st.text_area(

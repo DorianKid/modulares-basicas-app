@@ -1,9 +1,11 @@
-import os, json
+import json
 from collections import defaultdict
 from typing import List, Dict, Any
-from LIFI.courses_data_lifi import (base_lifi_courses, mod_lifi_courses, real_lifi_courses, per_lifi_courses)
+from LIFI.courses_data_lifi import (
+    base_lifi_courses, mod_lifi_courses, real_lifi_courses, per_lifi_courses
+)
 
-# Lee CSS/JS en cada render (sin cache de import)
+# --- util: lee CSS/JS en cada render (sin cache) ---
 def load_css() -> str:
     with open("app/files/style.css", "r", encoding="utf-8") as f:
         return f.read()
@@ -11,7 +13,6 @@ def load_css() -> str:
 def load_js(path: str) -> str:
     with open(path, "r", encoding="utf-8") as f:
         return f"<script>{f.read()}</script>"
-        
 
 ROMAN = ["", "I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"]
 
@@ -19,19 +20,10 @@ AREA_CLASS_LIFI = {
     "mate":"mate","fis":"fis","progra":"progra","lab":"lab",
     "metodo":"metodo","extra":"extra","quim":"quim","educ":"educ"
 }
-
 AREA_LABELS_LIFI = {
-    "mate": "Matemáticas",
-    "fis": "Física",
-    "progra": "Programación",
-    "metodo": "Metodología",
-    "lab": "Laboratorios",
-    "quim": "Química",
-    "educ": "Educativo",
-    "extra": "Extras",
+    "mate":"Matemáticas","fis":"Física","progra":"Programación","metodo":"Metodología",
+    "lab":"Laboratorios","quim":"Química","educ":"Educativo","extra":"Extras",
 }
-
-# Default labels por si no te pasan area_labels
 AREA_LABELS_DEFAULT = AREA_LABELS_LIFI.copy()
 
 def _order_by_id(courses: List[Dict[str, Any]]) -> Dict[str, int]:
@@ -43,16 +35,16 @@ def prereq_badges_html(course: Dict[str, Any], courses: List[Dict[str, Any]]) ->
     req_orders = [o for o in req_orders if o is not None]
     return "".join(f'<span class="badge-pr">{o}</span>' for o in req_orders)
 
-# --- Ghost (para modo normal) ---
+# --- spacer (solo modo normal) ---
 def ghost_cell_html(rows: int = 1) -> str:
     return f'<div class="cell ghost" style="grid-row: span {int(rows)};"></div>'
 
 def course_cell_html(
     c: Dict[str, Any],
     courses: List[Dict[str, Any]],
-    area_class: Dict[str, str] = None,
+    area_class: Dict[str, str] | None = None,
 ) -> str:
-    # Ignoramos spacers en los datos (el padding lo hacemos nosotros)
+    # ignoramos spacers del dataset: el padding lo hacemos nosotros
     if c.get("kind") == "spacer":
         return ""
 
@@ -102,18 +94,17 @@ def course_cell_html(
       </div>
     </div>
     """
-    
+
 def semester_column_html(
     sem: int,
     by_sem: Dict[int, List[Dict[str, Any]]],
     courses: List[Dict[str, Any]],
-    area_class: Dict[str, str] = None,
+    area_class: Dict[str, str] | None = None,
     *,
     editable: bool = False,
     slots_per_semester: int = 9,
 ) -> str:
     items = sorted(by_sem.get(sem, []), key=lambda x: x.get("order", 9999))
-
     used_slots = 0
     html_parts: list[str] = []
 
@@ -123,7 +114,7 @@ def semester_column_html(
                 rows = int(c.get("rows", 1) or 1)
                 html_parts.append(ghost_cell_html(rows))
                 used_slots += rows
-            # si editable=True ignoramos los spacers del dataset
+            # en editable=True no renderizamos spacers del dataset
         else:
             html_parts.append(course_cell_html(c, courses, area_class=area_class))
             used_slots += int(c.get("rows", 1) or 1)
@@ -162,27 +153,64 @@ def legend_html(area_class: Dict[str, str], area_labels: Dict[str, str] | None =
         "style=\"display:flex;flex-wrap:wrap;gap:12px;margin:16px 4px;"
         "color:#374151;position:relative;z-index:10;"
         "justify-content:center; text-align:center;"
-        "font-size: var(--legend-fs, 1rem);\">"  # 👈 aquí
+        "font-size: var(--legend-fs, 1rem);\">"
         + "".join(items) +
         "</div>"
     )
 
-def render_html(courses, area_class, area_labels, *, editable=False,
-                zoom=0.7, h1_fs="1.8rem", p_fs="1.05rem", legend_fs="1rem") -> str:
+def render_html(
+    courses: List[Dict[str, Any]],
+    area_class: Dict[str, str],
+    area_labels: Dict[str, str],
+    *,
+    editable: bool = False,
+    zoom: float = 0.7,
+    h1_fs: str = "1.8rem",
+    p_fs: str = "1.05rem",
+    legend_fs: str = "1rem",
+    slots_per_semester: int = 9,
+    max_semesters: int = 12,
+) -> str:
     css = load_css()
     JS_EXPORT = load_js("app/files/grid_functions.js")
     JS_DND    = load_js("app/files/drag_and_drop.js") if editable else ""
 
-    # ... (agrupas y construyes headers/columns como ya tienes)
+    # --- agrupar por semestre ---
+    data = courses
+    by_sem: Dict[int, List[Dict[str, Any]]] = defaultdict(list)
+    for c in data:
+        try:
+            sem = int(str(c.get("semester", 0)).strip() or 0)
+        except Exception:
+            sem = 0
+        if sem > 0:
+            by_sem[sem].append(c)
+
+    semesters = sorted(by_sem.keys()) or [1]
+    n_cols = len(semesters)
+
+    headers_row = "".join(
+        f"<div class='sem-head'>{ROMAN[s] if s < len(ROMAN) else str(s)}</div>"
+        for s in semesters
+    )
+    columns = "".join(
+        semester_column_html(
+            s, by_sem, data, area_class=area_class,
+            editable=editable, slots_per_semester=slots_per_semester
+        )
+        for s in semesters
+    )
+
+    unlock_css = build_unlock_rules(data)
 
     data_json = json.dumps(data, ensure_ascii=False)
-
-    # wrapper con zoom y tamaños; PONEMOS LAS VARS EN .plan TAMBIÉN
     plan_style = f"--h1-fs:{h1_fs}; --p-fs:{p_fs}; --legend-fs:{legend_fs};"
     zoom_wrap_style = f"--plan-zoom:{zoom};"
+    table_style = f"grid-template-columns: repeat({n_cols}, minmax(180px, 1.15fr));"
 
     html = f"""
-<style>{css}</style>
+<style>{css}
+{unlock_css}</style>
 
 <div class="plan-zoom-wrap" style="{zoom_wrap_style}">
   <div class="plan plan-zoom{' is-editable' if editable else ''}" style="{plan_style}">
@@ -202,7 +230,7 @@ def render_html(courses, area_class, area_labels, *, editable=False,
 
     {""
       if not editable else
-      '''
+      f'''
       <div class="edit-toolbar" style="margin:8px 4px;">
         <label style="display:inline-flex;align-items:center;gap:8px;font-weight:600;">
           <input id="edit-toggle" type="checkbox"> Editar (drag & drop)
@@ -214,8 +242,8 @@ def render_html(courses, area_class, area_labels, *, editable=False,
       '''
     }
 
-    <div class="table" data-slots="9" data-maxsem="12"
-         style="grid-template-columns: repeat({len(semesters)}, minmax(180px, 1.15fr));">
+    <div class="table" data-slots="{slots_per_semester}" data-maxsem="{max_semesters}"
+         style="{table_style}">
       {headers_row}
       {columns}
     </div>
@@ -236,7 +264,7 @@ def render_html(courses, area_class, area_labels, *, editable=False,
 {JS_DND}
 {JS_EXPORT}
 
-<!-- Override final por si hay reglas viejas en cache -->
+<!-- overrides por si hay reglas viejas en cache -->
 <style id="font-override">
   .legend{{ font-size: var(--legend-fs,1rem) !important; }}
   .plan h1{{ font-size: var(--h1-fs,1.6rem) !important; line-height:1.2; }}
@@ -245,10 +273,14 @@ def render_html(courses, area_class, area_labels, *, editable=False,
 """
     return html
 
-
-# --- Exportar HTMLs ---
+# --- HTMLs listos ---
 HTML_LIFI_N: str = render_html(base_lifi_courses, AREA_CLASS_LIFI, AREA_LABELS_LIFI, editable=False)
 HTML_LIFI_M: str = render_html(mod_lifi_courses,  AREA_CLASS_LIFI, AREA_LABELS_LIFI, editable=False)
 HTML_LIFI_R: str = render_html(real_lifi_courses, AREA_CLASS_LIFI, AREA_LABELS_LIFI, editable=False)
-HTML_LIFI_P: str = render_html(per_lifi_courses, AREA_CLASS_LIFI, AREA_LABELS_LIFI, editable=True)
+HTML_LIFI_P: str = render_html(per_lifi_courses,  AREA_CLASS_LIFI, AREA_LABELS_LIFI, editable=True)
 
+__all__ = [
+    "HTML_LIFI_N","HTML_LIFI_M","HTML_LIFI_R","HTML_LIFI_P",
+    "render_html","legend_html","build_unlock_rules",
+    "semester_column_html","course_cell_html","prereq_badges_html"
+]

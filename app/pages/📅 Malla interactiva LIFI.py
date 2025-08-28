@@ -118,4 +118,7 @@ with col2:
           )
   else:
     st.write("")
+    st.write("")
+    st.write("")
+
     st.info("Ingresa el JSON para poder ver tu progreso.")

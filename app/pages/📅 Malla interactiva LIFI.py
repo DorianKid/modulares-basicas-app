@@ -116,3 +116,5 @@ with col2:
               "JSON inválido. Ejemplo válido: {\"approved\":[\"ICS181\",\"EFI100\"]}\n\n"
               f"Error: {e}"
           )
+  else:
+    st.info("Ingresa el JSON para poder ver tu progreso.")

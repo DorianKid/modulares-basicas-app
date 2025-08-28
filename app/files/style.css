@@ -353,18 +353,18 @@ body.edit-mode .slot{
 
 /* Títulos y párrafos dentro del plan para hacerlos mas grandeeeeeeeeees */
 .plan h1{
-  font-size: clamp(2rem, 2.2vw + .5rem, 2rem); /* responde a ancho */
+  font-size: clamp(2rem, 2.2vw + .5rem, 2rem) !important; /* responde a ancho */
   line-height: 1.2;
   margin: 0 0 8px 4px; /* si quieres conservar tu margen */
 }
 
 .plan p{
-  font-size: 2rem;      /* súbele si lo quieres más grande */
+  font-size: 2rem !important;      /* súbele si lo quieres más grande */
   line-height: 1.45;
 }
 
 /* Leyenda (tamaño del texto) */
 .legend{
-  font-size: 2rem;      /* ajusta: 1.1rem / 1.2rem / etc. */
+  font-size: 2rem !important;    /* ajusta: 1.1rem / 1.2rem / etc. */
   line-height: 1.40;
 }

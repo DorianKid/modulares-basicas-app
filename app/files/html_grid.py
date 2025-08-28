@@ -253,7 +253,8 @@ def render_html(
     <div style="display:flex;gap:8px;margin-top:10px;justify-content:center;">
       <button id="btn-copy"
               style="padding:8px 10px;border-radius:8px;
-                     border:1px solid #cbd5e1;background:#f8fafc;cursor:pointer;">
+                     border:1px solid #cbd5e1;background:#f8fafc;cursor:pointer; 
+                     --p-fs: 1.30rem;">
         📋 Copiar progreso
       </button>
     </div>

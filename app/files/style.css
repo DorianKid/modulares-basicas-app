@@ -354,6 +354,7 @@ body.edit-mode .slot{
   background: rgba(148,163,184,.16);
 }
 
-.legend{ font-size: var(--legend-fs); }
-.plan h1{ font-size: var(--h1-fs); }
-.plan p{ font-size: var(--p-fs); }
+/* Fuerza los tamaños usando variables (y gana a otras reglas) */
+.plan .legend{ font-size: var(--legend-fs, 1rem) !important; }
+.plan h1{ font-size: var(--h1-fs, 1.6rem) !important; line-height: 1.2; }
+.plan p{ font-size: var(--p-fs, 1rem) !important; line-height: 1.45; }

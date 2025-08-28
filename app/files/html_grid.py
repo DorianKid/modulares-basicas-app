@@ -213,7 +213,7 @@ def render_html(
 {unlock_css}</style>
 
 <div class="plan-zoom-wrap" style="{zoom_wrap_style}">
-  <div class="plan plan-zoom{' is-editable' if editable else ''}" style="{plan_style}">
+  <div class="plan plan-zoom" style="--legend-fs:1.25rem; --h1-fs:2rem; --p-fs:1.1rem">
     <h1 style="margin:0 0 8px 4px;">Malla Curricular Interactiva</h1>
 
     <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 4px 14px 4px;">

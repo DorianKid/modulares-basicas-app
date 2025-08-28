@@ -162,7 +162,8 @@ def legend_html(area_class: Dict[str, str], area_labels: Dict[str, str] | None =
         "<div class=\"legend\" "
         "style=\"display:flex;flex-wrap:wrap;gap:12px;margin:16px 4px;"
         "color:#374151;position:relative;z-index:10;"
-        "justify-content:center; text-align:center;\">"
+        "justify-content:center; text-align:center;"
+        "font-size: var(--legend-fs, 1rem);\">"  # 👈 aquí
         + "".join(items) +
         "</div>"
     )

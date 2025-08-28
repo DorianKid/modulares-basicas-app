@@ -243,14 +243,16 @@ def render_html(
 {unlock_css}</style>
 
 <div class="plan-zoom-wrap" style="--plan-zoom:.7;">
-  <div class="plan plan-zoom" style="--legend-fs:5rem; --h1-fs:1.8rem; --p-fs:1.05rem;">
-    <h1 style="margin:0 0 8px 4px;">Malla Curricular Interactiva</h1>
+  <div class="plan plan-zoom">
+    <h1 style="margin:0 0 8px 4px; font-size:1.8rem; line-height:1.2;">
+      Malla Curricular Interactiva
+    </h1>
 
     <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 4px 14px 4px;">
-      <p style="margin:0;color:#444">
-        Marca materias aprobadas haciendo click en ellas para ir viendo tu progreso en la carrera.
-        Usa el botón para exportar tu progreso como JSON y ver tus estadísticas.
-      </p>
+        <p style="margin:0; color:#444; font-size:1.05rem; line-height:1.5;">
+          Marca materias aprobadas haciendo click en ellas para ir viendo tu progreso en la carrera.
+          Usa el botón para exportar tu progreso como JSON y ver tus estadísticas.
+        </p>
       {solo_ver_html}
     </div>
 

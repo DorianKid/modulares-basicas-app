@@ -213,7 +213,7 @@ def render_html(
 {unlock_css}</style>
 
 <div class="plan-zoom-wrap" style="{zoom_wrap_style}">
-  <div class="plan plan-zoom" style="--legend-fs:2rem; --h1-fs:3rem; --p-fs:2rem">
+  <div class="plan plan-zoom" style="--legend-fs:1.75rem; --h1-fs:3rem; --p-fs:1.55rem">
     <h1 style="margin:0 0 8px 4px;">Malla Curricular Interactiva</h1>
 
     <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 4px 14px 4px;">
@@ -263,13 +263,6 @@ def render_html(
 <script id="__courses" type="application/json">{data_json}</script>
 {JS_DND}
 {JS_EXPORT}
-
-<!-- overrides por si hay reglas viejas en cache -->
-<style id="font-override">
-  .legend{{ font-size: var(--legend-fs,1rem) !important; }}
-  .plan h1{{ font-size: var(--h1-fs,1.6rem) !important; line-height:1.2; }}
-  .plan p{{ font-size: var(--p-fs,1rem) !important; line-height:1.45; }}
-</style>
 """
     return html
 

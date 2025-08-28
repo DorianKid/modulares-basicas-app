@@ -351,3 +351,20 @@ body.edit-mode .slot{
   background: rgba(148,163,184,.16);
 }
 
+/* Títulos y párrafos dentro del plan */
+.plan h1{
+  font-size: clamp(1.25rem, 2.2vw + .5rem, 2rem); /* responde a ancho */
+  line-height: 1.2;
+  margin: 0 0 8px 4px; /* si quieres conservar tu margen */
+}
+
+.plan p{
+  font-size: 1rem;      /* súbele si lo quieres más grande */
+  line-height: 1.45;
+}
+
+/* Leyenda (tamaño del texto) */
+.legend{
+  font-size: 1rem;      /* ajusta: 1.1rem / 1.2rem / etc. */
+  line-height: 1.40;
+}

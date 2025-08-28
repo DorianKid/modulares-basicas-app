@@ -231,13 +231,28 @@ def render_html(
     {""
       if not editable else
       f'''
-      <div class="edit-toolbar" style="margin:8px 4px;">
-        <label style="display:inline-flex;align-items:center;gap:8px;font-weight:600;">
+      <div class="edit-toolbar" style="margin:8px 4px; align-itmes:center;">
+        <label style="display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:1.1rem;line-height:1.1;">
           <input id="edit-toggle" type="checkbox"> Editar (drag & drop)
         </label>
-        <button id="btn-add-sem">➕ Agregar semestre</button>
-        <button id="btn-rem-sem">➖ Quitar último</button>
-        <button id="btn-download">🖨️ Descargar malla</button>
+        <button id="btn-add-sem">
+                       style="padding:8px 10px;border-radius:8px;
+                       border:1px solid #cbd5e1;background:#f8fafc;cursor:pointer;
+                       font-size:1.1rem; line-height:1.2;">
+            ➕ Agregar semestre
+        </button>
+        <button id="btn-rem-sem" 
+                       style="padding:8px 10px;border-radius:8px;
+                       border:1px solid #cbd5e1;background:#f8fafc;cursor:pointer;
+                       font-size:1.1rem; line-height:1.2;">
+            ➖ Quitar último
+        </button>
+        <button id="btn-download" 
+                       style="padding:8px 10px;border-radius:8px;
+                       border:1px solid #cbd5e1;background:#f8fafc;cursor:pointer;
+                       font-size:1.1rem; line-height:1.2;">
+            🖨️ Descargar malla
+        </button>
       </div>
       '''
     }

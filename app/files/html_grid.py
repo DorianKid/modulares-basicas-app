@@ -3,34 +3,15 @@ from collections import defaultdict
 from typing import List, Dict, Any
 from LIFI.courses_data_lifi import (base_lifi_courses, mod_lifi_courses, real_lifi_courses, per_lifi_courses)
 
-# ========= HOT RELOAD de archivos por mtime =========
-_FILE_CACHE: Dict[str, Dict[str, Any]] = {}
-
-def _read_text(path: str) -> str:
-    with open(path, "r", encoding="utf-8") as f:
+# Lee CSS/JS en cada render (sin cache de import)
+def load_css() -> str:
+    with open("app/files/style.css", "r", encoding="utf-8") as f:
         return f.read()
 
-def _load_text(path: str) -> str:
-    """Devuelve el texto del archivo y lo recarga solo si cambia su mtime."""
-    try:
-        mtime = os.path.getmtime(path)
-    except OSError:
-        return ""
-    cached = _FILE_CACHE.get(path)
-    if cached and cached["mtime"] == mtime:
-        return cached["text"]
-    text = _read_text(path)
-    _FILE_CACHE[path] = {"mtime": mtime, "text": text}
-    return text
-
-def load_css() -> str:
-    return _load_text("app/files/style.css")
-
-def load_js_export() -> str:
-    return f"<script>{_load_text('app/files/grid_functions.js')}</script>"
-
-def load_js_dnd() -> str:
-    return f"<script>{_load_text('app/files/drag_and_drop.js')}</script>"
+def load_js(path: str) -> str:
+    with open(path, "r", encoding="utf-8") as f:
+        return f"<script>{f.read()}</script>"
+        
 
 ROMAN = ["", "I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"]
 

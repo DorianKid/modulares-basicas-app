@@ -1,7 +1,7 @@
 import json
 from collections import defaultdict
 from typing import List, Dict, Any
-from files.courses_data import (base_lifi_courses, mod_lifi_courses, real_lifi_courses, per_lifi_courses)
+from LIFI.courses_data_lifi import (base_lifi_courses, mod_lifi_courses, real_lifi_courses, per_lifi_courses)
 
 # Integrar css
 with open("app/files/style.css") as f:

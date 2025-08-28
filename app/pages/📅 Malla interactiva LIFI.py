@@ -90,7 +90,7 @@ with tab4:
 # PArte para calcular estadisticas
 st.markdown("### ¡Revisa tu progreso! (Estadísticas)")
 
-col1, col, col2 = st.columns([2,1,2])
+col1, col, col2, cola = st.columns([2,1,2,1])
 
 with col1:
   progreso_text = st.text_area(
@@ -107,7 +107,6 @@ with col2:
           approved = set(data.get("approved", []))
           ac, tc, pc, acred, tcred, pcred = calc_stats(approved)
   
-          st.write("")
           st.write("")
         
           m1, m2, m3 = st.columns(3)

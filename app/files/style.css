@@ -290,8 +290,8 @@ body.debug .cell.ghost{
   border: 1px dashed rgba(0,0,0,.08);
 }
 
-# 9 Slot para arrastre
-/* toolbar + modo edición */
+
+/* toolbar + modo edición  9 Slot para arrastre */
 .edit-toolbar{display:flex; gap:8px; align-items:center; flex-wrap:wrap;}
 body.edit-mode .cell{ cursor: move; }
 body.edit-mode .cell .tick{ display:none; }
@@ -354,7 +354,6 @@ body.edit-mode .slot{
   background: rgba(148,163,184,.16);
 }
 
-/* Fuerza los tamaños usando variables (y gana a otras reglas) */
 .plan .legend{ font-size: var(--legend-fs, 1rem) !important; }
-.plan h1{ font-size: var(--h1-fs, 1.6rem) !important; line-height: 1.2; }
-.plan p{ font-size: var(--p-fs, 1rem) !important; line-height: 1.45; }
+.plan h1{      font-size: var(--h1-fs, 1.6rem) !important; line-height: 1.2; }
+.plan p{       font-size: var(--p-fs, 1rem)      !important; line-height: 1.45; }

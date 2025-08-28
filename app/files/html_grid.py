@@ -241,7 +241,7 @@ def render_html(
 <style>{css}
 {unlock_css}</style>
 
-<div class="plan-zoom-wrap" style="--plan-zoom:{zoom}">
+<div class="plan-zoom-wrap" style="--plan-zoom:.7; --legend-fs:1.5rem; --h1-fs:1.8rem; --p-fs:1.05rem;">
   <div class="plan plan-zoom">
     <h1 style="margin:0 0 8px 4px;">Malla Curricular Interactiva</h1>
 

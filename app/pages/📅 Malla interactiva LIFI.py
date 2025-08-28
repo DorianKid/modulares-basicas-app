@@ -117,4 +117,5 @@ with col2:
               f"Error: {e}"
           )
   else:
+    st.wrtie("")
     st.info("Ingresa el JSON para poder ver tu progreso.")

@@ -160,6 +160,8 @@ body.view-only .cell:has(.tick input:checked) .card{
 .card.extra  { background: var(--c-extra); }
 .card.quim   { background: var(--c-quim); }
 .card.educ   { background: var(--c-educ); }
+.card.med   { background: var(--c-med); }
+.card.farma   { background: var(--c-farma); }
 
 /* =====================================================
    6) Título (no se solapa con barras)

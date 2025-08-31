@@ -134,6 +134,10 @@ body.view-only .cell:has(.tick input:checked) .card{
 .extra{background:var(--c-extra);color:#fff}
 .quim{background:var(--c-quim);color:#111}
 .educ{background:var(--c-educ);color:#111}
+.farma{background:var(--c-farma);color:#111}
+.med{background:var(--c-med);color:#111}
+
+
 
 /* =====================================================
    5) Barra superior (clave + orden)

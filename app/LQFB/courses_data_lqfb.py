@@ -28,14 +28,14 @@ base_lqfb_courses = [
     {"id":"I6161","code":"I6161","name":"SEMINARIO DE TUTORIA INICIAL III","credits":2,"hours":2,"semester":3,"order":21,"area":"metodo","prereqs":["I6160"]},
 
     # ===== Semestre IV =====
-    {"id":"I6131","code":"I6131","name":"FISICOQUIMICA II PARA FARMACEUTICOS","credits":7,"hours":4,"semester":4,"order":22,"area":"","prereqs":["I6128"]},
-    {"id":"I6138","code":"I6138","name":"FARMACOLOGIA I","credits":7,"hours":5,"semester":4,"order":23,"area":"","prereqs":["I6137","I6129","I6136"]},
-    {"id":"I6140","code":"I6140","name":"BIOQUIMICA I","credits":7,"hours":5,"semester":4,"order":24,"area":"","prereqs":["I6129","I6137"]},
-    {"id":"I6139","code":"I6139","name":"NORMATIVIDAD Y LEGISLACION SANITARIA","credits":5,"hours":2,"semester":4,"order":25,"area":"","prereqs":["I6136","I6156"]},
-    {"id":"I6130","code":"I6130","name":"QUIMICA ANALITICA II","credits":8,"hours":5,"semester":4,"order":26,"area":"","prereqs":["I6127"]},
-    {"id":"I6141","code":"I6141","name":"PARASITOLOGIA","credits":7,"hours":5,"semester":4,"order":27,"area":"","prereqs":[]},
-    {"id":"I6162","code":"I6162","name":"SEMINARIO DE TUTORIA INTERMEDIA I","credits":2,"hours":2,"semester":4,"order":28,"area":"","prereqs":["I6161"]},
-    {"id":"","code":"","name":"OPTATIVA ABIERTA II","credits":4,"hours":4,"semester":4,"order":29,"area":"","prereqs":[]},
+    {"id":"I6131","code":"I6131","name":"FISICOQUIMICA II PARA FARMACEUTICOS","credits":7,"hours":4,"semester":4,"order":22,"area":"fis","prereqs":["I6128"]},
+    {"id":"I6138","code":"I6138","name":"FARMACOLOGIA I","credits":7,"hours":5,"semester":4,"order":23,"area":"farma","prereqs":["I6137","I6129","I6136"]},
+    {"id":"I6140","code":"I6140","name":"BIOQUIMICA I","credits":7,"hours":5,"semester":4,"order":24,"area":"farma","prereqs":["I6129","I6137"]},
+    {"id":"I6139","code":"I6139","name":"NORMATIVIDAD Y LEGISLACION SANITARIA","credits":5,"hours":2,"semester":4,"order":25,"area":"med","prereqs":["I6136","I6156"]},
+    {"id":"I6130","code":"I6130","name":"QUIMICA ANALITICA II","credits":8,"hours":5,"semester":4,"order":26,"area":"quim","prereqs":["I6127"]},
+    {"id":"I6141","code":"I6141","name":"PARASITOLOGIA","credits":7,"hours":5,"semester":4,"order":27,"area":"med","prereqs":[]},
+    {"id":"I6162","code":"I6162","name":"SEMINARIO DE TUTORIA INTERMEDIA I","credits":2,"hours":2,"semester":4,"order":28,"area":"metodo","prereqs":["I6161"]},
+    {"id":"","code":"","name":"OPTATIVA ABIERTA II","credits":4,"hours":4,"semester":4,"order":29,"area":"extra","prereqs":[]},
 
     # ===== Semestre V =====
     {"id":"I6142","code":"I6142","name":"FARMACOLOGIA II","credits":8,"hours":4,"semester":5,"order":30,"area":"farma","prereqs":["I6138"]},

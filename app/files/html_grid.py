@@ -4,6 +4,10 @@ from typing import List, Dict, Any
 from LIFI.courses_data_lifi import (
     base_lifi_courses, mod_lifi_courses, real_lifi_courses, per_lifi_courses
 )
+from LQFB.courses_data_lqfb import (
+    base_lqfb_courses, mod_lqfb_courses, per_lqfb_courses
+)
+
 
 # --- util: lee CSS/JS en cada render (sin cache) ---
 def load_css() -> str:
@@ -16,6 +20,7 @@ def load_js(path: str) -> str:
 
 ROMAN = ["", "I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"]
 
+# LIFI COLORES y LABELS
 AREA_CLASS_LIFI = {
     "mate":"mate","fis":"fis","progra":"progra","lab":"lab",
     "metodo":"metodo","extra":"extra","quim":"quim","educ":"educ"
@@ -24,6 +29,15 @@ AREA_LABELS_LIFI = {
     "mate":"Matemáticas","fis":"Física","progra":"Programación","metodo":"Metodología",
     "lab":"Laboratorios","quim":"Química","educ":"Educativo","extra":"Extras",
 }
+
+# LQFB COLORES y LABELS
+AREA_CLASS_LQFB = {
+    "mate":"mate","lab":"lab","metodo":"metodo","extra":"extra","quim":"quim"
+}
+AREA_LABELS_LQFB = {
+    "mate":"Matemáticas","metodo":"Metodología","lab":"Laboratorios","quim":"Química","extra":"Extras"
+}
+
 AREA_LABELS_DEFAULT = AREA_LABELS_LIFI.copy()
 
 def _order_by_id(courses: List[Dict[str, Any]]) -> Dict[str, int]:
@@ -283,13 +297,20 @@ def render_html(
     return html
 
 # --- HTMLs listos ---
+# LIFI
 HTML_LIFI_N: str = render_html(base_lifi_courses, AREA_CLASS_LIFI, AREA_LABELS_LIFI, editable=False)
 HTML_LIFI_M: str = render_html(mod_lifi_courses,  AREA_CLASS_LIFI, AREA_LABELS_LIFI, editable=False)
 HTML_LIFI_R: str = render_html(real_lifi_courses, AREA_CLASS_LIFI, AREA_LABELS_LIFI, editable=False)
 HTML_LIFI_P: str = render_html(per_lifi_courses,  AREA_CLASS_LIFI, AREA_LABELS_LIFI, editable=True)
 
+# LQFB
+HTML_LIFI_N: str = render_html(base_lqfb_courses, AREA_CLASS_LQFB, AREA_LABELS_LQFB, editable=False)
+HTML_LIFI_M: str = render_html(mod_lqfb_courses,  AREA_CLASS_LQFB, AREA_LABELS_LQFB, editable=False)
+HTML_LIFI_P: str = render_html(per_lqfb_courses,  AREA_CLASS_LQFB, AREA_LABELS_LQFB, editable=True)
+
 __all__ = [
     "HTML_LIFI_N","HTML_LIFI_M","HTML_LIFI_R","HTML_LIFI_P",
+    "HTML_LQFB_N","HTML_LQFB_M","HTML_LQFB_P",
     "render_html","legend_html","build_unlock_rules",
     "semester_column_html","course_cell_html","prereq_badges_html"
 ]

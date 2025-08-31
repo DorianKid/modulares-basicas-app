@@ -75,7 +75,7 @@ def num(x, default=0):
 
 # ---- Calcular métricas (ignora spacers) ----
 def calc_stats(approved_ids: set[str]):
-    real_courses = [c for c in mod_lifi_courses if is_real_course(c)]
+    real_courses = [c for c in mod_lqfb_courses if is_real_course(c)]
     real_ids     = {c["id"] for c in real_courses}
 
     # Solo consideramos aprobadas las que existen y son reales

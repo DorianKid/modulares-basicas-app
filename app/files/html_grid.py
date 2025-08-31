@@ -32,11 +32,11 @@ AREA_LABELS_LIFI = {
 
 # LQFB COLORES y LABELS
 AREA_CLASS_LQFB = {
-    "mate":"mate","lab":"lab","metodo":"metodo","extra":"extra","quim":"quim", "med":"med", "fis":"fis", "progra":"farma"
+    "mate":"mate","lab":"lab","metodo":"metodo","extra":"extra","quim":"quim", "med":"med", "fis":"fis", "farma":"farma"
 }
 AREA_LABELS_LQFB = {
     "mate":"Matemáticas","metodo":"Metodología","lab":"Laboratorios","quim":"Química","extra":"Extras",
-    "fis":"Física", "med":"Medicina", "progra":"Farmacia"
+    "fis":"Física", "med":"Medicina", "farma":"Farmacia"
 }
 
 AREA_LABELS_DEFAULT = AREA_LABELS_LIFI.copy()

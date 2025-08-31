@@ -170,7 +170,7 @@ mod_lqfb_courses = [
     {"id":"I6177","code":"I6177","name":"DESARROLLO SUSTENTABLE","credits":2,"hours":5,"semester":9,"order":64,"area":"mate","prereqs":[]},
     {"id":"I6178","code":"I6178","name":"BIOTECNOLOGIA","credits":8,"hours":5,"semester":9,"order":65,"area":"farma","prereqs":["I6176","I6152"]},
     {"id":"","code":"","name":"OPTATIVA ABIERTA III","credits":4,"hours":4,"semester":9,"order":66,"area":"extra","prereqs":[]},
-    {"id":"","code":"","name":"PROYECTO MODULAR DE FARMACIA","credits":2,"hours":0,"semester":9,"order":67,"area":"extra","prereqs":[]}
+    {"id":"","code":"","name":"PROYECTO MODULAR DE FARMACIA","credits":2,"hours":0,"semester":9,"order":67,"area":"extra","prereqs":[]},
     
     # ===== Semestre X (nuevas de la tabla que no estaban) =====
     {"id":"V2455","code":"V2455","name":"ANALISIS DE PROBLEMAS GLOBALES DEL SIGLO XXI","credits":0,"hours":"","semester":10,"order":1,"area":"","prereqs":[]},
@@ -261,7 +261,7 @@ per_lqfb_courses = [
     {"id":"I6177","code":"I6177","name":"DESARROLLO SUSTENTABLE","credits":2,"hours":5,"semester":9,"order":64,"area":"mate","prereqs":[]},
     {"id":"I6178","code":"I6178","name":"BIOTECNOLOGIA","credits":8,"hours":5,"semester":9,"order":65,"area":"farma","prereqs":[]},
     {"id":"","code":"","name":"OPTATIVA ABIERTA III","credits":4,"hours":4,"semester":9,"order":66,"area":"extra","prereqs":[]},
-    {"id":"","code":"","name":"PROYECTO MODULAR DE FARMACIA","credits":2,"hours":0,"semester":9,"order":67,"area":"extra","prereqs":[]}
+    {"id":"","code":"","name":"PROYECTO MODULAR DE FARMACIA","credits":2,"hours":0,"semester":9,"order":67,"area":"extra","prereqs":[]},
 
     # ===== Semestre X (nuevas de la tabla que no estaban) =====
     {"id":"V2455","code":"V2455","name":"ANALISIS DE PROBLEMAS GLOBALES DEL SIGLO XXI","credits":0,"hours":"","semester":10,"order":1,"area":"","prereqs":[]},

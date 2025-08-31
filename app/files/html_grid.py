@@ -304,9 +304,9 @@ HTML_LIFI_R: str = render_html(real_lifi_courses, AREA_CLASS_LIFI, AREA_LABELS_L
 HTML_LIFI_P: str = render_html(per_lifi_courses,  AREA_CLASS_LIFI, AREA_LABELS_LIFI, editable=True)
 
 # LQFB
-HTML_LIFI_N: str = render_html(base_lqfb_courses, AREA_CLASS_LQFB, AREA_LABELS_LQFB, editable=False)
-HTML_LIFI_M: str = render_html(mod_lqfb_courses,  AREA_CLASS_LQFB, AREA_LABELS_LQFB, editable=False)
-HTML_LIFI_P: str = render_html(per_lqfb_courses,  AREA_CLASS_LQFB, AREA_LABELS_LQFB, editable=True)
+HTML_LQFB_N: str = render_html(base_lqfb_courses, AREA_CLASS_LQFB, AREA_LABELS_LQFB, editable=False)
+HTML_LQFB_M: str = render_html(mod_lqfb_courses,  AREA_CLASS_LQFB, AREA_LABELS_LQFB, editable=False)
+HTML_LQFB_P: str = render_html(per_lqfb_courses,  AREA_CLASS_LQFB, AREA_LABELS_LQFB, editable=True)
 
 __all__ = [
     "HTML_LIFI_N","HTML_LIFI_M","HTML_LIFI_R","HTML_LIFI_P",

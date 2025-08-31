@@ -198,7 +198,7 @@ per_lqfb_courses = [
 
     # ===== Semestre III =====
     {"id":"I6128","code":"I6128","name":"FISICOQUIMICA I PARA FARMACEUTICOS","credits":7,"hours":4,"semester":3,"order":15,"area":"fis","prereqs":[]},
-    {"id":"I6129","code":"I6129","name":"QUIMICA ORGANICA II","credits":9,"hours":5,"semester":3,"order":16,"area":"quim","prereqs":[},
+    {"id":"I6129","code":"I6129","name":"QUIMICA ORGANICA II","credits":9,"hours":5,"semester":3,"order":16,"area":"quim","prereqs":[]},
     {"id":"I6137","code":"I6137","name":"FISIOLOGIA Y FUNDAMENTOS DE FISIO-PATOLOGIA","credits":14,"hours":7,"semester":3,"order":17,"area":"med","prereqs":[]},
     {"id":"I6127","code":"I6127","name":"QUIMICA ANALITICA I","credits":8,"hours":5,"semester":3,"order":18,"area":"quim","prereqs":[]},
     {"id":"I5874","code":"I5874","name":"DISEÑO DE EXPERIMENTOS","credits":7,"hours":3,"semester":3,"order":19,"area":"metodo","prereqs":[]},
@@ -208,7 +208,7 @@ per_lqfb_courses = [
     # ===== Semestre IV =====
     {"id":"I6131","code":"I6131","name":"FISICOQUIMICA II PARA FARMACEUTICOS","credits":7,"hours":4,"semester":4,"order":22,"area":"fis","prereqs":[]},
     {"id":"I6138","code":"I6138","name":"FARMACOLOGIA I","credits":7,"hours":5,"semester":4,"order":23,"area":"farma","prereqs":[]},
-    {"id":"I6140","code":"I6140","name":"BIOQUIMICA I","credits":7,"hours":5,"semester":4,"order":24,"area":"farma","prereqs":["]},
+    {"id":"I6140","code":"I6140","name":"BIOQUIMICA I","credits":7,"hours":5,"semester":4,"order":24,"area":"farma","prereqs":[]},
     {"id":"I6139","code":"I6139","name":"NORMATIVIDAD Y LEGISLACION SANITARIA","credits":5,"hours":2,"semester":4,"order":25,"area":"med","prereqs":[]},
     {"id":"I6130","code":"I6130","name":"QUIMICA ANALITICA II","credits":8,"hours":5,"semester":4,"order":26,"area":"quim","prereqs":[]},
     {"id":"I6141","code":"I6141","name":"PARASITOLOGIA","credits":7,"hours":5,"semester":4,"order":27,"area":"med","prereqs":[]},
@@ -240,7 +240,7 @@ per_lqfb_courses = [
     {"id":"I6176","code":"I6176","name":"LABORATORIO DE BIOLOGIA MOLECULAR Y GENETICA","credits":3,"hours":3,"semester":7,"order":47,"area":"lab","prereqs":[]},
     {"id":"I6170","code":"I6170","name":"QUIMICA Y TOXICOLOGIA FORENSE","credits":7,"hours":4,"semester":7,"order":48,"area":"quim","prereqs":[]},
     {"id":"I6152","code":"I6152","name":"MICROBIOLOGIA APLICADA","credits":9,"hours":5,"semester":7,"order":49,"area":"farma","prereqs":[]},
-    {"id":"I6165","code":"I6165","name":"SEMINARIO DE TUTORIA DE EGRESO","credits":2,"hours":0,"semester":7,"order":50,"area":"metodo","prereqs":[},
+    {"id":"I6165","code":"I6165","name":"SEMINARIO DE TUTORIA DE EGRESO","credits":2,"hours":0,"semester":7,"order":50,"area":"metodo","prereqs":[]},
     {"id":"I6182","code":"I6182","name":"PROYECTO DE QUIMICA ANALITICA Y EVALUACION TOXICOLOGICA","credits":2,"hours":51,"semester":7,"order":8,"area":"extra","prereqs":[]},
 
     # ===== Semestre VIII =====
@@ -265,5 +265,4 @@ per_lqfb_courses = [
 
     # ===== Semestre X (nuevas de la tabla que no estaban) =====
     {"id":"V2455","code":"V2455","name":"ANALISIS DE PROBLEMAS GLOBALES DEL SIGLO XXI","credits":0,"hours":"","semester":10,"order":1,"area":"","prereqs":[]},
-
-]
+    ]

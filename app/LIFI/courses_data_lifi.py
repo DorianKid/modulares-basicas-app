@@ -85,7 +85,7 @@ base_lifi_courses = [
     {"id":"I6035","code":"I6035","name":"CLINICA TUTORIAL IV","credits":2,"hours": 2,"semester":8,"order":52,"area":"metodo","prereqs":["I6034"]},
 
     # ===== Semestre IX =====
-    {"id":"I6029","code":"I6029","name":"LABORATORIO DE FISICA III","credits":2,"hours": 2,"semester":9,"order":53,"area":"fis","prereqs":["I6004"]},
+    {"id":"I6029","code":"I6029","name":"LABORATORIO DE FISICA III","credits":2,"hours": 2,"semester":9,"order":53,"area":"fis","prereqs":[]},
     {"id":"SPC-IX-06", "semester":9, "order":54, "kind":"spacer", "rows":1},
     {"id":"SPC-IX-06", "semester":9, "order":54, "kind":"spacer", "rows":1},
     {"id":"I6021","code":"I6021","name":"DISEÑO Y EVALUACION DE RECURSOS EDUCATIVOS","credits":7,"hours": 4,"semester":9,"order":54,"area":"educ","prereqs":[]},

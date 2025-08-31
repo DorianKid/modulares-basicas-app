@@ -1,4 +1,5 @@
 base_lqfb_courses = [
+    
     # ===== Semestre I =====
     {"id":"I6121","code":"I6121","name":"CALCULO DIFERENCIAL INTEGRAL","credits":8,"hours":10,"semester":1,"order":1,"area":"mate","prereqs":[]},
     {"id":"I6156","code":"I6156","name":"BIOETICA Y DEONTOLOGIA","credits":5,"hours":4,"semester":1,"order":2,"area":"farma","prereqs":[]},
@@ -22,7 +23,7 @@ base_lqfb_courses = [
     {"id":"I6129","code":"I6129","name":"QUIMICA ORGANICA II","credits":9,"hours":5,"semester":3,"order":16,"area":"quim","prereqs":["I6124"]},
     {"id":"I6137","code":"I6137","name":"FISIOLOGIA Y FUNDAMENTOS DE FISIO-PATOLOGIA","credits":14,"hours":7,"semester":3,"order":17,"area":"med","prereqs":["I6135"]},
     {"id":"I6127","code":"I6127","name":"QUIMICA ANALITICA I","credits":8,"hours":5,"semester":3,"order":18,"area":"quim","prereqs":["I6126"]},
-    {"id":"I5874","code":"I5874","name":"DISEÑO DE EXPERIMENTOS","credits":7,"hours":3,"semester":19,"order":5,"area":"metodo","prereqs":[]},
+    {"id":"I5874","code":"I5874","name":"DISEÑO DE EXPERIMENTOS","credits":7,"hours":3,"semester":3,"order":19,"area":"metodo","prereqs":[]},
     {"id":"","code":"","name":"OPTATIVA ABIERTA II","credits":7,"hours":3,"semester":3,"order":20,"area":"extra","prereqs":[]},
     {"id":"I6161","code":"I6161","name":"SEMINARIO DE TUTORIA INICIAL III","credits":2,"hours":2,"semester":3,"order":21,"area":"metodo","prereqs":["I6160"]},
 

@@ -366,40 +366,5 @@ body.edit-mode .slot{
 .plan h1{      font-size: var(--h1-fs, 1.6rem) !important; line-height: 1.2; }
 .plan p{       font-size: var(--p-fs, 1rem)      !important; line-height: 1.45; }
 
-/* Badge cuadrado de semestre – centrado perfecto */
-/* Badge cuadrado de semestre — centrado real y consistente */
-.badge-sem{
-  --sem-size: 18px;
-
-  /* tamaño y caja (incluye el borde) */
-  width: var(--sem-size);
-  height: var(--sem-size);
-  box-sizing: border-box;
-  padding: 0;
-
-  /* centrado absoluto del contenido */
-  display: inline-grid;
-  place-items: center;         /* centra X y Y */
-
-  /* tipografía */
-  font-weight: 800;
-  font-size: .70rem;
-  line-height: 1;              /* sin empuje vertical */
-
-  /* estilo visual */
-  background:#fff;
-  color:#111;
-  border:1px solid rgba(0,0,0,.25);
-  border-radius: 4px;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.04) inset;
-
-  /* alineación respecto a la barra */
-  vertical-align: middle;
-  margin-left: 6px;
-}
-
-/* (opcional) si solo quieres mostrarlo en edición */
-.edit-mode .badge-sem{ display: inline-grid; }
-
 
 

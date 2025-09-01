@@ -89,7 +89,7 @@ def course_cell_html(
     )
 
     return f"""
-    <div class="cell{locked_class}" id="c-{c['id']}" data-prereqs="{prereqs_attr}">
+    <div class="cell{locked_class}" id="c-{c['id']}" data-prereqs="{prereqs_attr}" data-home-sem="{c.get('semester','')}">
       <label class="tick" for="{chk_id}">
         <input type="checkbox" id="{chk_id}"><span>Aprobado</span>
       </label>
@@ -97,6 +97,7 @@ def course_cell_html(
         <div class="code-row">
           <span>{c.get('code','')}</span>
           <span class="num">{c.get('order','')}</span>
+          <span class="sem-origin">{c.get('semester','')}</span>  # ← nuevo
         </div>
         <div class="title">{c.get('name','')}</div>
         <div class="footer">

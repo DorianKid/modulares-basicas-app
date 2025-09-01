@@ -394,12 +394,4 @@ body.edit-mode .slot{
   margin-left: 6px;
 }
 
-/* asegúrate de que la fila centre sus hijos */
-.card .code-row{
-  display:flex;
-  align-items:center;               /* <-- ya lo tienes, pero por si acaso */
-  gap: 6px;                         /* opcional, separa elementos */
-}
-
-.badge-sem{ transform: translateY(0.5px); }  /* o 1px si lo necesitas */
 

@@ -1,6 +1,5 @@
 (function(){
   const ROMAN = ["","I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"];
-  const SWAP_EDGE = 0.40; // 10% superior del slot para activar swap preview
 
   // ---------- util ----------
   function tableEl(){ return document.querySelector('.table'); }
@@ -34,54 +33,46 @@
     return slots;
   }
 
-  // Mueve .cell “sueltas” o mal ubicadas dentro de su slot (por número .num)
+  // Asegura que cada slot tenga a lo sumo 1 .cell y normaliza el numerito
   function padSlots(col){
     const slots = ensureSlots(col);
     const N = slots.length;
 
-    // 1) tomar todas las .cell que estén directamente bajo la col o bajo un slot
-    const strayCells = [];
-    // cells sueltas
-    [...col.querySelectorAll(':scope > .cell')].forEach(c => strayCells.push(c));
-    // cells dentro de slots duplicadas
+    // 1) recoger celdas sueltas (no dentro de .slot) o duplicadas dentro del mismo .slot
+    const stray = [];
+    [...col.querySelectorAll(':scope > .cell')].forEach(c => stray.push(c));
     slots.forEach(s=>{
       const cs = s.querySelectorAll(':scope > .cell');
       if (cs.length > 1){
-        for (let i = 1; i < cs.length; i++) strayCells.push(cs[i]);
+        for (let i = 1; i < cs.length; i++) stray.push(cs[i]);
       }
     });
 
-    // 2) colocar cada cell en su slot (por número visible .num, si no, por primer vacío)
-    function findEmpty(from){
-      for (let p = from; p <= N; p++){
-        if (!slots[p-1].querySelector('.cell')) return p;
+    // 2) poner cada stray en el primer slot libre
+    function firstEmpty(fromIdx=0){
+      for (let i = fromIdx; i < N; i++){
+        if (!slots[i].querySelector('.cell')) return i;
       }
-      for (let p = 1; p < from; p++){
-        if (!slots[p-1].querySelector('.cell')) return p;
+      for (let i = 0; i < fromIdx; i++){
+        if (!slots[i].querySelector('.cell')) return i;
       }
       return null;
     }
-
-    strayCells.forEach(c=>{
-      let p = parseInt(c.querySelector('.num')?.textContent || '0', 10);
-      if (!(p >= 1 && p <= N) || slots[p-1].querySelector('.cell')){
-        p = findEmpty(1) || 1;
-      }
-      slots[p-1].appendChild(c);
+    stray.forEach(c=>{
+      const idx = firstEmpty(0);
+      if (idx != null) slots[idx].appendChild(c);
     });
 
-    // 3) normalizar números visibles (no tocar si estás en edición)
+    // 3) normalizar números visibles (solo fuera de edición)
     const editOn = document.body.classList.contains('edit-mode');
     slots.forEach((s,i)=>{
       const c = s.querySelector(':scope > .cell');
-      if (c){
-        const num = c.querySelector('.num');
-        if (num && !editOn) num.textContent = String(i+1);
-      }
+      const num = c?.querySelector('.num');
+      if (num && !editOn) num.textContent = String(i+1);
     });
   }
 
-  // Escribir semester/order en COURSES_STATE (no reacomoda DOM)
+  // Guarda semester/order desde el DOM y actualiza numeritos (fuera de edición)
   function recomputeOrders(){
     const data = window.COURSES_STATE || [];
     const idToIdx = new Map(data.map((c,i)=>[String(c.id), i]));
@@ -96,108 +87,52 @@
         const cid = cell.id.replace('c-','');
         const idx = idToIdx.get(cid);
         if (idx != null){
-          data[idx].semester = sem;  // slot/semestre real
-          data[idx].order = i+1;     // slot real
+          data[idx].semester = sem;
+          data[idx].order = i+1;
         }
         const num = cell.querySelector('.num');
         if (num && !editOn) num.textContent = String(i+1);
       });
     });
-    updateNumSemUI(); // refresca la UI (num/semestre)
+    updateNumSemUI();
   }
 
-  // ----- UI: alterna .num vs .sem-origin durante edición -----
+  // Muestra semestre original en edición, número fuera de edición
   function updateNumSemUI() {
     const editOn = document.body.classList.contains('edit-mode');
     document.querySelectorAll('.table .cell').forEach(cell => {
       const num = cell.querySelector('.num');
       const sem = cell.querySelector('.sem-origin');
       if (sem) {
-        // usa el dato data-home-sem si está presente
         const hv = cell.dataset.homeSem || sem.textContent || '';
-        sem.textContent = hv;
+        sem.textContent = hv; // muestra el "semestre original" del HTML
       }
       if (num) num.style.display = editOn ? 'none'  : 'inline';
       if (sem) sem.style.display = editOn ? 'inline': 'none';
     });
   }
 
-  // ---------- DnD basado en slots + swap preview ----------
+  // ---------- DnD: one-per-slot y swap solo al soltar ----------
   function bindColumn(col){
-    ensureSlots(col);     // asegura N slots
-    padSlots(col);        // mete las celdas en su slot por número
+    ensureSlots(col);
+    padSlots(col);
 
     let dragged = null;
-    let originSlot = null;          // slot inicial del dragged
-    let swapState = null;           // {withCell, withSlot, origDraggedSlot, origOtherSlot}
-    let committed = false;          // se soltó con drop válido
+    let originSlot = null;
+    let committed = false;
 
-    function clearDropHints(){
+    function clearHints(){
       col.querySelectorAll('.slot.drop-ok').forEach(s=> s.classList.remove('drop-ok'));
     }
 
-    // --- swap preview helpers ---
-    function doSwapPreview(targetSlot){
-      if (!dragged || !targetSlot) return;
-      const other = targetSlot.querySelector(':scope > .cell');
-      if (!other || other === dragged) return;
-
-      const fromSlot = dragged.closest('.slot');
-      if (!fromSlot || fromSlot === targetSlot) return;
-
-      // guarda estado para posible revert
-      swapState = {
-        withCell: other,
-        withSlot: targetSlot,
-        origDraggedSlot: originSlot || fromSlot,
-        origOtherSlot: other.closest('.slot')
-      };
-
-      // intercambio visual
-      fromSlot.appendChild(other);
-      targetSlot.appendChild(dragged);
-      updateNumSemUI(); // mantiene UI coherente
-    }
-
-    function revertSwapPreview(){
-      if (!swapState) return;
-      const { withCell, origDraggedSlot, origOtherSlot } = swapState;
-      if (withCell && origOtherSlot) origOtherSlot.appendChild(withCell);
-      if (dragged && origDraggedSlot) origDraggedSlot.appendChild(dragged);
-      swapState = null;
-      updateNumSemUI();
-    }
-
-    // dragover: permitir drop y, si el slot está ocupado, activar swap preview según borde superior
+    // Drag OVER: solo habilita drop y marca visual el slot destino
     col.addEventListener('dragover', (e)=>{
       if (!document.body.classList.contains('edit-mode')) return;
-
       const slot = e.target.closest('.slot');
       if (!slot || !col.contains(slot)) return;
-
-      e.preventDefault(); // habilita drop en cualquier caso
-      clearDropHints();
-
-      const occupied = !!slot.querySelector(':scope > .cell');
-
-      if (!occupied){
-        slot.classList.add('drop-ok');
-        revertSwapPreview();
-        return;
-      }
-
-      // Slot ocupado → detectar si el puntero está en el 10% superior
-      const r = slot.getBoundingClientRect();
-      const y = e.clientY - r.top;
-      const h = r.height;
-      const nearTop = y <= h * SWAP_EDGE;
-
-      if (nearTop) {
-        doSwapPreview(slot); // intercambio temporal
-      } else {
-        // si nos movimos dentro del slot pero fuera del borde superior, quitar preview
-        revertSwapPreview();
-      }
+      e.preventDefault(); // ← IMPORTANTÍSIMO para permitir drop
+      clearHints();
+      slot.classList.add('drop-ok');
     });
 
     col.addEventListener('dragleave', (e)=>{
@@ -205,45 +140,37 @@
       slot?.classList.remove('drop-ok');
     });
 
-    // drop: consolidar donde se suelte
+    // DROP: mueve si vacío; si ocupado, intercambia con el de origen
     col.addEventListener('drop', (e)=>{
       if (!dragged) return;
       e.preventDefault();
       committed = true;
 
       const slot = e.target.closest('.slot');
-      clearDropHints();
+      clearHints();
       if (!slot) return;
 
-      const occupied = !!slot.querySelector(':scope > .cell');
+      const from = originSlot || dragged.closest('.slot');
+      if (!from) return;
 
-      if (!occupied){
-        // slot vacío → colocar
+      if (!slot.querySelector(':scope > .cell')){
+        // destino vacío → mover
         slot.appendChild(dragged);
       } else {
-        // slot ocupado
-        if (swapState && swapState.withSlot === slot) {
-          // ya está intercambiado en preview; sólo consolidar (no hay nada que mover)
-        } else {
-          // sin preview, hacer swap directo con el contenido del slot
-          const other = slot.querySelector(':scope > .cell');
-          const from = dragged.closest('.slot');
-          if (other && from){
-            from.appendChild(other);
-            slot.appendChild(dragged);
-          }
+        // destino ocupado → swap con el de origen
+        const other = slot.querySelector(':scope > .cell');
+        if (other && from !== slot){
+          from.appendChild(other);
+          slot.appendChild(dragged);
         }
       }
 
-      // fin de arrastre
       dragged.classList.remove('dragging');
-      dragged = null;
-      originSlot = null;
-      swapState = null;
-      recomputeOrders();   // actualiza semester/order y numeritos (según modo)
+      dragged = null; originSlot = null;
+      recomputeOrders(); // guarda semester/order y ajusta numeritos
     });
 
-    // listeners globales para iniciar/terminar drag
+    // Global: inicio/fin de drag
     document.addEventListener('dragstart', (e)=>{
       const cell = e.target.closest('.cell');
       if (!cell || !document.body.classList.contains('edit-mode')) return;
@@ -257,21 +184,21 @@
     document.addEventListener('dragend', ()=>{
       const d = document.querySelector('.cell.dragging');
       if (d) d.classList.remove('dragging');
-
-      // si NO se consolidó con drop, revierte el preview
-      if (!committed) revertSwapPreview();
-
+      if (!committed){
+        // no hubo drop válido → nada cambia
+      }
       dragged = null;
       originSlot = null;
       committed = false;
-      recomputeOrders();   // sincroniza estado real/visual
+      padSlots(col);       // por si acaso, garantiza 1 por slot
+      recomputeOrders();
     });
   }
 
   function enableEdit(on){
     document.body.classList.toggle('edit-mode', on);
     document.querySelectorAll('.cell').forEach(c=> c.setAttribute('draggable', on ? 'true' : 'false'));
-    updateNumSemUI(); // alterna num/semestre original
+    updateNumSemUI();
   }
 
   // ---------- Semestres ----------
@@ -294,10 +221,8 @@
     col.className = 'sem-col';
     col.dataset.sem = String(next);
 
-    // header al principio (antes de la 1ª col)
     const firstCol = t.querySelector('.sem-col');
     if (firstCol) t.insertBefore(head, firstCol); else t.appendChild(head);
-    // columna al final
     t.appendChild(col);
 
     bindColumn(col);
@@ -354,7 +279,7 @@
     if (src) window.COURSES_STATE = JSON.parse(src.textContent || '[]');
     else window.COURSES_STATE = [];
 
-    // preparar columnas → slots → acomodar celdas dentro de su slot
+    // preparar columnas
     document.querySelectorAll('.table .sem-col').forEach(col=>{
       bindColumn(col);
     });

@@ -366,50 +366,28 @@ body.edit-mode .slot{
 .plan h1{      font-size: var(--h1-fs, 1.6rem) !important; line-height: 1.2; }
 .plan p{       font-size: var(--p-fs, 1rem)      !important; line-height: 1.45; }
 
-
-
-/* Badge cuadrado para el semestre original */
-.code-row .sem-origin{
-  /* caja cuadrada */
-  --sem-size: 1.45rem;           /* ajusta tamaño a tu gusto */
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* Cuadrado para SEMESTRE (similar a .badge-pr pero con bordes rectos) */
+.badge-sem{
+  /* tamaño */
+  --sem-size: 18px;               /* ajústalo si lo quieres más grande */
   width: var(--sem-size);
   height: var(--sem-size);
 
-  /* tipografía */
-  font-weight: 700;
-  font-size: 0.82rem;            /* ligeramente más pequeño que .num */
+  /* caja y tipografía */
+  display: grid;
+  place-items: center;
+  border-radius: 4px;             /* cuadrado (si quieres 0, pon 0) */
+  background: #fff;
+  color: #111;
+  font-weight: 800;
+  font-size: .65rem;
   line-height: 1;
-  letter-spacing: .2px;
-
-  /* colores (puedes ajustar variables para theming) */
-  --sem-badge-bg: #eef2ff;       /* azul muy claro */
-  --sem-badge-fg: #1e3a8a;       /* azul oscuro */
-  --sem-badge-bd: #c7d2fe;       /* borde lavanda */
-
-  background: var(--sem-badge-bg);
-  color: var(--sem-badge-fg);
-  border: 1px solid var(--sem-badge-bd);
-
-  /* cuadrado (no “pill”) */
-  border-radius: 4px;
-
-  /* separación respecto a los otros elementos */
-  margin-left: 6px;
+  border: 1px solid rgba(0,0,0,.25);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.04) inset;
+  margin-left: 6px;               /* separación en la code-row */
 }
 
-/* Opcional: en modo edición marca visualmente que se está mostrando el semestre original */
-.edit-mode .sem-origin{
-  --sem-badge-bg: #ecfccb;  /* verde muy claro */
-  --sem-badge-fg: #365314;  /* verde oscuro */
-  --sem-badge-bd: #d9f99d;
-}
 
-/* Si quieres asegurar que siempre se alinee bien con .num (por si .num es más alto): */
-.code-row{
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+/* Mostrarla sólo en edición si así lo manejas con JS */
+.edit-mode .badge-sem{ display: inline-grid; }
+

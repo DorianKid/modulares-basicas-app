@@ -35,7 +35,7 @@ base_lqfb_courses = [
     {"id":"I6130","code":"I6130","name":"QUIMICA ANALITICA II","credits":8,"hours":5,"semester":4,"order":26,"area":"quim","prereqs":["I6127"]},
     {"id":"I6141","code":"I6141","name":"PARASITOLOGIA","credits":7,"hours":5,"semester":4,"order":27,"area":"med","prereqs":[]},
     {"id":"I6162","code":"I6162","name":"SEMINARIO DE TUTORIA INTERMEDIA I","credits":2,"hours":2,"semester":4,"order":28,"area":"metodo","prereqs":["I6161"]},
-    {"id":"","code":"","name":"OPTATIVA ABIERTA II","credits":4,"hours":4,"semester":4,"order":29,"area":"extra","prereqs":[]},
+    {"id":"","code":"","name":"OPTATIVA ABIERTA III","credits":4,"hours":4,"semester":4,"order":29,"area":"extra","prereqs":[]},
 
     # ===== Semestre V =====
     {"id":"I6142","code":"I6142","name":"FARMACOLOGIA II","credits":8,"hours":4,"semester":5,"order":30,"area":"farma","prereqs":["I6138"]},
@@ -82,7 +82,7 @@ base_lqfb_courses = [
     {"id":"I6133","code":"I6133","name":"ANALISIS BROMATOLOGICOS","credits":5,"hours":4,"semester":9,"order":63,"area":"farma","prereqs":["I6132","I6144"]},
     {"id":"I6177","code":"I6177","name":"DESARROLLO SUSTENTABLE","credits":2,"hours":5,"semester":9,"order":64,"area":"mate","prereqs":[]},
     {"id":"I6178","code":"I6178","name":"BIOTECNOLOGIA","credits":8,"hours":5,"semester":9,"order":65,"area":"farma","prereqs":["I6176","I6152"]},
-    {"id":"","code":"","name":"OPTATIVA ABIERTA III","credits":4,"hours":4,"semester":9,"order":66,"area":"extra","prereqs":[]},
+    {"id":"","code":"","name":"OPTATIVA ABIERTA IV","credits":4,"hours":4,"semester":9,"order":66,"area":"extra","prereqs":[]},
     {"id":"","code":"","name":"PROYECTO MODULAR DE FARMACIA","credits":2,"hours":0,"semester":9,"order":67,"area":"extra","prereqs":[]}
 ]
 

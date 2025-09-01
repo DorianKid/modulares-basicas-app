@@ -366,28 +366,39 @@ body.edit-mode .slot{
 .plan h1{      font-size: var(--h1-fs, 1.6rem) !important; line-height: 1.2; }
 .plan p{       font-size: var(--p-fs, 1rem)      !important; line-height: 1.45; }
 
-/* Cuadrado para SEMESTRE (similar a .badge-pr pero con bordes rectos) */
+/* Badge cuadrado de semestre – centrado perfecto */
 .badge-sem{
-  /* tamaño */
-  --sem-size: 18px;               /* ajústalo si lo quieres más grande */
+  --sem-size: 18px;
+
+  /* caja */
+  display: inline-flex;             /* usa flex para centrar */
+  align-items: center;              /* centra vertical */
+  justify-content: center;          /* centra horizontal */
   width: var(--sem-size);
   height: var(--sem-size);
 
-  /* caja y tipografía */
-  display: grid;
-  place-items: center;
-  border-radius: 4px;             /* cuadrado (si quieres 0, pon 0) */
-  background: #fff;
-  color: #111;
+  /* tipografía */
   font-weight: 800;
-  font-size: .65rem;
-  line-height: 1;
-  border: 1px solid rgba(0,0,0,.25);
+  font-size: .70rem;
+  line-height: 1;                   /* evita que empuje hacia arriba */
+
+  /* estilo */
+  background:#fff;
+  color:#111;
+  border:1px solid rgba(0,0,0,.25);
+  border-radius: 4px;
   box-shadow: 0 0 0 1px rgba(0,0,0,.04) inset;
-  margin-left: 6px;               /* separación en la code-row */
+
+  /* alineación respecto a los demás spans de .code-row */
+  vertical-align: middle;           /* quita el “salto” por baseline */
+  margin-left: 6px;
 }
 
+/* asegúrate de que la fila centre sus hijos */
+.card .code-row{
+  display:flex;
+  align-items:center;               /* <-- ya lo tienes, pero por si acaso */
+  gap: 6px;                         /* opcional, separa elementos */
+}
 
-/* Mostrarla sólo en edición si así lo manejas con JS */
-.edit-mode .badge-sem{ display: inline-grid; }
 

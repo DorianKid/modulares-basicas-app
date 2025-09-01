@@ -1,6 +1,6 @@
 (function(){
   const ROMAN = ["","I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"];
-  const SWAP_EDGE = 0.20; // 10% superior del slot para activar swap preview
+  const SWAP_EDGE = 0.40; // 10% superior del slot para activar swap preview
 
   // ---------- util ----------
   function tableEl(){ return document.querySelector('.table'); }

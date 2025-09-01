@@ -271,6 +271,7 @@ function updateNumSemUI() {
       bindColumn(col);
     });
     updateGridColumns();
+    updateNumSemUI();   // <-- NUEVO
 
     // UI
     document.getElementById('edit-toggle')?.addEventListener('change', (e)=> enableEdit(e.target.checked));

@@ -97,7 +97,7 @@ def course_cell_html(
         <div class="code-row">
           <span>{c.get('code','')}</span>
           <span class="num">{c.get('order','')}</span>
-          <span class="sem-origin badge-sem" title="Semestre original">{c.get('semester','')}</span>
+          <span class="sem-origin">{c.get('semester','')}</span> 
         </div>
         <div class="title">{c.get('name','')}</div>
         <div class="footer">

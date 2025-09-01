@@ -71,10 +71,12 @@
     });
 
     // 3) normalizar números visibles conforme a su slot padre
+    const editOn = document.body.classList.contains('edit-mode');
     slots.forEach((s,i)=>{
       const c = s.querySelector(':scope > .cell');
       if (c){
-        const num = c.querySelector('.num'); if (num) num.textContent = String(i+1);
+        const num = c.querySelector('.num');
+        if (num && !editOn) num.textContent = String(i+1);
       }
     });
   }
@@ -87,6 +89,10 @@
       const sem = parseInt(col.dataset.sem,10);
       const slots = ensureSlots(col);
       slots.forEach((s,i)=>{
+        const num = cell.querySelector('.num');
+        if (num && !document.body.classList.contains('edit-mode')) {
+          num.textContent = String(i+1);
+        }
         const cell = s.querySelector(':scope > .cell');
         if (!cell) return;
         const cid = cell.id.replace('c-','');
@@ -155,10 +161,12 @@
     });
   }
 
-  function enableEdit(on){
-    document.body.classList.toggle('edit-mode', on);
-    document.querySelectorAll('.cell').forEach(c=> c.setAttribute('draggable', on ? 'true' : 'false'));
-  }
+function enableEdit(on){
+  document.body.classList.toggle('edit-mode', on);
+  document.querySelectorAll('.cell')
+    .forEach(c => c.setAttribute('draggable', on ? 'true' : 'false'));
+  updateNumSemUI(); // <-- NUEVO
+}
 
   // ---------- Semestres ----------
   function currentMaxSem(){
@@ -205,10 +213,7 @@
     updateGridColumns();
   }
 
-// --- reemplaza esto ---
-// function downloadPDF(){ window.print(); }
-
-// --- por esto ---
+// --- Descargar malla ---
 function downloadMalla(selector = '.plan') {
   const node = document.querySelector(selector);
   if (!node) return alert('No encontré la malla a exportar');
@@ -238,6 +243,20 @@ function downloadMalla(selector = '.plan') {
   setTimeout(()=>{ w.print(); w.close(); }, 50);
 }
 
+function updateNumSemUI() {
+  const editOn = document.body.classList.contains('edit-mode');
+  document.querySelectorAll('.table .cell').forEach(cell => {
+    const num = cell.querySelector('.num');
+    const sem = cell.querySelector('.sem-origin');
+
+    // asegura el valor del semestre original desde el data-*
+    if (sem) sem.textContent = cell.dataset.homeSem || sem.textContent || '';
+
+    if (num) num.style.display = editOn ? 'none' : 'inline';
+    if (sem) sem.style.display = editOn ? 'inline' : 'none';
+  });
+}
+  
   // ---------- init ----------
   document.addEventListener('DOMContentLoaded', ()=>{
     const t = tableEl(); if (!t) return;

@@ -8,7 +8,10 @@ PERSIST = "vectorstore"
 
 # 1) retriever local
 def get_retriever():
-    emb = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+    emb = SentenceTransformerEmbeddings(
+            model_name="all-MiniLM-L6-v2",
+            model_kwargs={"device": "cpu"}  # 👈 fuerza CPU
+    )
     db = Chroma(persist_directory=PERSIST,
                 collection_name="docs",
                 embedding_function=emb)

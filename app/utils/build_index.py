@@ -21,7 +21,10 @@ def build_or_refresh():
     splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=100)
     chunks = splitter.split_documents(docs)
 
-    emb = SentenceTransformerEmbeddings(model_name=MODEL_NAME)
+    emb = SentenceTransformerEmbeddings(
+        model_name="all-MiniLM-L6-v2",
+        model_kwargs={"device": "cpu"}  # 👈 fuerza CPU
+    )
     Chroma.from_documents(
         chunks, emb,
         collection_name="docs",

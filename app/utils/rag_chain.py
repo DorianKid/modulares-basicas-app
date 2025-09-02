@@ -1,7 +1,7 @@
-from langchain.vectorstores import Chroma
-from langchain.embeddings import SentenceTransformerEmbeddings
-from langchain.chains import RetrievalQA
-from langchain.prompts import PromptTemplate
+from langchain_community.vectorstores import Chroma
+from langchain_community.embeddings import SentenceTransformerEmbeddings
+from langchain_community.chains import RetrievalQA
+from langchain_community.prompts import PromptTemplate
 from transformers import pipeline
 
 PERSIST = "vectorstore"
@@ -29,7 +29,7 @@ prompt = PromptTemplate(
 )
 
 def get_qa_chain():
-    from langchain.llms import HuggingFacePipeline
+    from langchain_community.llms import HuggingFacePipeline
     llm = HuggingFacePipeline(pipeline=qa_pipe)
     retriever = get_retriever()
     return RetrievalQA.from_chain_type(

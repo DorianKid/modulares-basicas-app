@@ -7,7 +7,7 @@ st.title("Auditoría de respuestas")
 conn = get_conn()
 df = pd.read_sql_query("SELECT * FROM log ORDER BY ts DESC", conn)
 
-st.dataframe(df, use_container_width=True)
+st.dataframe(df, width='stretch')   # antes: use_container_width=True
 
 for _, row in df.iterrows():
     if pd.isnull(row["ok"]):

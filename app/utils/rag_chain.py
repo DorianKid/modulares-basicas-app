@@ -1,8 +1,9 @@
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import SentenceTransformerEmbeddings
-from langchain_community.chains import RetrievalQA
-from langchain_community.prompts import PromptTemplate
+from langchain.chains import RetrievalQA                 # ← NO está en community
+from langchain.prompts import PromptTemplate             # ← NO está en community
 from transformers import pipeline
+from langchain_community.llms import HuggingFacePipeline # ← sí está en community
 
 PERSIST = "vectorstore"
 
@@ -32,7 +33,6 @@ prompt = PromptTemplate(
 )
 
 def get_qa_chain():
-    from langchain_community.llms import HuggingFacePipeline
     llm = HuggingFacePipeline(pipeline=qa_pipe)
     retriever = get_retriever()
     return RetrievalQA.from_chain_type(

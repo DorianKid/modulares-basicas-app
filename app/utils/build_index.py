@@ -1,6 +1,6 @@
 import os, glob
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
-from langchain_community.text_splitter import RecursiveCharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import SentenceTransformerEmbeddings
 

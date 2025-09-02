@@ -1,7 +1,8 @@
 streamlit-pdf-viewer
+streamlit
 langchain==0.1.*
 langchain-community
 sentence-transformers
 chromadb==0.4.*
 pypdf2
-ollama          # para usar el modelo local en tu PC
+torch --index-url https://download.pytorch.org/whl/cpu   # 👈 CPU-solo

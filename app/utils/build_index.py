@@ -1,12 +1,12 @@
-import os, glob
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import SentenceTransformerEmbeddings
+import os, glob
 
-DATA_DIR   = "data"
-PERSIST    = "vectorstore"
-MODEL_NAME = "all-MiniLM-L6-v2"
+this_file_dir = os.path.dirname(__file__)
+DATA_DIR = os.path.join(this_file_dir, "..", "data")
+PERSIST = os.path.join(this_file_dir, "..", "vectorstore")
 
 def build_or_refresh():
     docs = []
@@ -23,11 +23,8 @@ def build_or_refresh():
 
     emb = SentenceTransformerEmbeddings(
         model_name="all-MiniLM-L6-v2",
-        model_kwargs={"device": "cpu"}  # 👈 fuerza CPU
+        model_kwargs={"device": "cpu"}
     )
-    Chroma.from_documents(
-        chunks, emb,
-        collection_name="docs",
-        persist_directory=PERSIST
-    ).persist()
+    vectorstore = FAISS.from_documents(chunks, emb)
+    vectorstore.save_local(PERSIST)
     return True

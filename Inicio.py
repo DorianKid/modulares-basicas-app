@@ -182,7 +182,7 @@ else:
     """)
 
 # Ruta del archivo PDF
-pdf_path = "app/files/PDFs/Plantilla_Modulares.pdf"  # Reemplaza con la ruta a tu archivo PDF
+pdf_path = "files/PDFs/Plantilla_Modulares.pdf"  # Reemplaza con la ruta a tu archivo PDF
 
 # Contenedor expandible para el PDF
 with st.expander("Ver Plantilla", expanded=False):

@@ -1,7 +1,7 @@
 # Modulares Básicas — UDG (Web App)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
-[![Made with: Streamlit](https://img.shields.io/badge/Made%20with-Streamlit-blue)](https://streamlit.io/)
+<p style="text-align:center;">[![Made with: Streamlit](https://img.shields.io/badge/Made%20with-Streamlit-blue)](https://streamlit.io/)</p>
 
 Aplicación web (Python + **Streamlit** + HTML/CSS/JS) para orientar a estudiantes de la UDG en **Modulares Básicas**: qué son, **cómo realizarlas**, **posibles asesores/profesores** y una **malla curricular dinámica** para planear y **visualizar tu progreso**.
 
@@ -164,3 +164,4 @@ Este proyecto está bajo la **Licencia MIT**. Consulta [`LICENSE`](./LICENSE).
 
 - El objetivo del proyecto es **informar** a alumnas/os sobre Modulares Básicas y ofrecer una **herramienta práctica** para planear la trayectoria académica.
 - Si deseas desplegarlo, puedes usar **Streamlit Community Cloud** o cualquier hosting que soporte apps Python/Streamlit.
+

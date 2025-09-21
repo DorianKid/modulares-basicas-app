@@ -188,8 +188,8 @@ def render_html(
     max_semesters: int = 12,
 ) -> str:
     css = load_css()
-    JS_EXPORT = load_js("app/files/grid_functions.js")
-    JS_DND    = load_js("app/files/drag_and_drop.js") if editable else ""
+    JS_EXPORT = load_js("files/grid_functions.js")
+    JS_DND    = load_js("files/drag_and_drop.js") if editable else ""
 
     # --- agrupar por semestre ---
     data = courses

@@ -11,7 +11,7 @@ from LQFB.courses_data_lqfb import (
 
 # --- util: lee CSS/JS en cada render (sin cache) ---
 def load_css() -> str:
-    with open("app/files/style.css", "r", encoding="utf-8") as f:
+    with open("files/style.css", "r", encoding="utf-8") as f:
         return f.read()
 
 def load_js(path: str) -> str:
